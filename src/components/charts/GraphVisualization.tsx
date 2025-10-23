@@ -168,7 +168,7 @@ export default function GraphVisualization({
       .style('z-index', 1000);
 
     node
-      .on('mouseover', function (event: any, d: any) {
+      .on('mouseover', function (_event: any, d: any) {
         tooltip
           .style('visibility', 'visible')
           .html(
@@ -194,7 +194,7 @@ export default function GraphVisualization({
         tooltip.style('visibility', 'hidden');
         d3.select(this).select('circle').attr('stroke-width', 2);
       })
-      .on('click', function (event: any, d: any) {
+      .on('click', function (_event: any, d: any) {
         if (onNodeClick) {
           onNodeClick(d);
         }
