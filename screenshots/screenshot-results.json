@@ -1,0 +1,145 @@
+{
+  "timestamp": "2025-10-23T13:01:40.172Z",
+  "totalPages": 15,
+  "successCount": 15,
+  "failCount": 0,
+  "results": [
+    {
+      "name": "01-Dashboard",
+      "status": "success"
+    },
+    {
+      "name": "02-Roadmap-Manager",
+      "status": "success"
+    },
+    {
+      "name": "03-Content-Generator",
+      "status": "success"
+    },
+    {
+      "name": "04-Content-Library",
+      "status": "success"
+    },
+    {
+      "name": "05-Citation-Tracker",
+      "status": "success"
+    },
+    {
+      "name": "06-Workflow-Monitor",
+      "status": "success"
+    },
+    {
+      "name": "07-Prompt-Landscape",
+      "status": "success"
+    },
+    {
+      "name": "08-Analytics-Reports",
+      "status": "success"
+    },
+    {
+      "name": "09-User-Management",
+      "status": "success"
+    },
+    {
+      "name": "10-Settings",
+      "status": "success"
+    },
+    {
+      "name": "11-Shopify-GEO",
+      "status": "success"
+    },
+    {
+      "name": "12-Amazon-GEO",
+      "status": "success"
+    },
+    {
+      "name": "13-YouTube-Videos",
+      "status": "success"
+    },
+    {
+      "name": "14-Reddit-Posts",
+      "status": "success"
+    },
+    {
+      "name": "15-Medium-Articles",
+      "status": "success"
+    }
+  ],
+  "pages": [
+    {
+      "name": "01-Dashboard",
+      "route": "/",
+      "description": "Main dashboard with KPI metrics and workflow status"
+    },
+    {
+      "name": "02-Roadmap-Manager",
+      "route": "/roadmap",
+      "description": "Monthly GEO roadmap management with priority levels"
+    },
+    {
+      "name": "03-Content-Generator",
+      "route": "/content-generator",
+      "description": "Multi-channel content generation interface"
+    },
+    {
+      "name": "04-Content-Library",
+      "route": "/content-library",
+      "description": "Published content inventory and management"
+    },
+    {
+      "name": "05-Citation-Tracker",
+      "route": "/citation-tracker",
+      "description": "Track citations across 7 AI platforms"
+    },
+    {
+      "name": "06-Workflow-Monitor",
+      "route": "/workflow-monitor",
+      "description": "7-step GEO workflow automation monitor"
+    },
+    {
+      "name": "07-Prompt-Landscape",
+      "route": "/prompt-landscape",
+      "description": "Knowledge graph visualization of prompt relationships"
+    },
+    {
+      "name": "08-Analytics-Reports",
+      "route": "/analytics-reports",
+      "description": "Performance analytics and reporting dashboard"
+    },
+    {
+      "name": "09-User-Management",
+      "route": "/user-management",
+      "description": "User account and permission management"
+    },
+    {
+      "name": "10-Settings",
+      "route": "/settings",
+      "description": "System configuration and preferences"
+    },
+    {
+      "name": "11-Shopify-GEO",
+      "route": "/shopify-geo",
+      "description": "Shopify platform GEO optimization"
+    },
+    {
+      "name": "12-Amazon-GEO",
+      "route": "/amazon-geo",
+      "description": "Amazon platform GEO optimization"
+    },
+    {
+      "name": "13-YouTube-Videos",
+      "route": "/youtube-videos",
+      "description": "YouTube content management"
+    },
+    {
+      "name": "14-Reddit-Posts",
+      "route": "/reddit-posts",
+      "description": "Reddit content management"
+    },
+    {
+      "name": "15-Medium-Articles",
+      "route": "/medium-articles",
+      "description": "Medium article management"
+    }
+  ]
+}

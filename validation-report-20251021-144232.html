@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetNight GEO - Validation Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1976D2; border-bottom: 3px solid #FF6B35; padding-bottom: 10px; }
+        .timestamp { color: #666; font-size: 14px; margin-bottom: 30px; }
+        .phase { margin: 20px 0; padding: 15px; border-left: 4px solid #ddd; background: #fafafa; }
+        .passed { border-left-color: #4CAF50; }
+        .failed { border-left-color: #F44336; }
+        .skipped { border-left-color: #FFC107; }
+        .status { font-weight: bold; font-size: 18px; }
+        .status.pass { color: #4CAF50; }
+        .status.fail { color: #F44336; }
+        .status.skip { color: #FFC107; }
+        .summary { background: #E3F2FD; padding: 20px; border-radius: 4px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 SweetNight GEO - Validation Report</h1>
+        <div class="timestamp">Generated: 2025-10-21 14:42:32</div>
+
+        <h2>Phase Results</h2>
+
+        <div class="phase failed">
+            <strong>Phase 1: Frontend Design</strong><br>
+            <span class="status fail">❌ FAILED</span>
+        </div>
+
+        <div class="phase skipped">
+            <strong>Phase 2: Backend Development</strong><br>
+            <span class="status skip">⏭️  SKIPPED</span>
+        </div>
+
+        <div class="phase failed">
+            <strong>Priority System (P0-P3)</strong><br>
+            <span class="status fail">❌ FAILED</span>
+        </div>
+
+        <div class="phase failed">
+            <strong>15 Core Pages</strong><br>
+            <span class="status fail">❌ FAILED</span>
+        </div>
+
+        <div class="summary">
+            <h3>Summary</h3>
+            <p><strong>Total Phases/Checks:</strong> 6</p>
+            <p><strong>Passed:</strong> 0</p>
+            <p><strong>Failed/Skipped:</strong> 6</p>
+        </div>
+    </div>
+</body>
+</html>
