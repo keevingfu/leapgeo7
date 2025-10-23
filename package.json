@@ -10,7 +10,12 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
     "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "deploy": "bash scripts/auto-deploy.sh",
+    "deploy:msg": "bash scripts/auto-deploy.sh",
+    "health-check": "bash scripts/health-check.sh",
+    "setup:git": "bash scripts/setup-git.sh",
+    "ci": "npm run type-check && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
