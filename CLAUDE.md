@@ -615,3 +615,110 @@ src/
 - [ ] 实现节点拖拽保存位置
 - [ ] 集成 Neo4j 后端数据源
 - [ ] 添加更多筛选选项 (按内容类型、平台等)
+
+---
+
+### 🎉 2025-10-24 (晚间): GEO Content Mapping Network - Three-Layer Visualization System
+
+**Status**: ✅ Completed and Deployed
+
+**完成的功能**:
+
+#### 1. 核心可视化系统
+**文件**: `src/pages/GeoMappingNetwork/index.tsx` (600+ lines)
+
+**三层网络架构**:
+- ✅ **Prompts Layer** - 20个SweetNight床垫相关prompt节点
+  - P0-P3优先级颜色编码 (红/橙/黄/蓝)
+  - 圆形节点，按GEO分数大小调整
+  - 覆盖状态边框 (绿=已覆盖，红=未覆盖)
+
+- ✅ **Contents Layer** - 8种内容类型
+  - 矩形节点（橙色）
+  - YouTube Reviews, Comparison Articles, Amazon A+ Content, FAQ等
+
+- ✅ **Citations Layer** - 7个引用平台
+  - 三角形节点（绿色）
+  - Professional Reviews, YouTube Channels, Amazon Platform, Reddit等
+
+**核心价值体现**:
+1. **战略可视化价值** - P0-P3优先级层级，资源分配一目了然
+2. **内容覆盖缺口分析** - 85%覆盖率展示，结构化漏洞识别
+3. **多渠道引用追踪** - 7平台引用路径，28个活跃连接
+4. **竞品对比决策** - -10%竞品差距指标
+5. **数据驱动执行** - 实时筛选，动态KPI统计
+
+#### 2. Canvas图表组件
+**文件**: `src/components/charts/ThreeLayerNetworkGraph.tsx` (300+ lines)
+
+**技术实现**:
+- ✅ Canvas 2D API高性能渲染
+- ✅ 三层固定布局 (15%, 50%, 85% width)
+- ✅ 节点形状编码: 圆形/矩形/三角形
+- ✅ 颜色系统: P0=#EF4444, P1=#F97316, P2=#EAB308, P3=#3B82F6
+- ✅ 透明连接线 (alpha 0.4)
+- ✅ 交互式节点点击选择
+- ✅ 图例和图层标签
+
+#### 3. 交互功能
+- ✅ **动态筛选系统**
+  - Priority Filter (All Levels / P0 / P1 / P2 / P3)
+  - Category Filter (All Categories / Problem Solution / Tutorial / Comparison等)
+  - Coverage Status (All Status / Covered / Not Covered)
+
+- ✅ **节点详情面板**
+  - 点击节点显示完整信息
+  - Prompt: GEO分数、优先级、类别、搜索量、目标受众
+  - Content: 类型、数量
+  - Citation: 平台、数量
+
+- ✅ **KPI统计卡片** (4个)
+  - Visible Prompts: 20/20
+  - Active Connections: 28
+  - Content Coverage: 85%
+  - Competitor Gap: -10%
+
+#### 4. 系统集成与清理
+- ✅ **路由配置**: `/geo-mapping-network`
+- ✅ **菜单项**: 位于 Awareness 分组
+- ✅ **菜单名称**: "Content Mapping" (简洁2词)
+- ✅ **图标**: DeviceHub (紫色 #8B5CF6)
+- ✅ **删除旧页面**: 移除原Content Mapping页面及相关代码
+
+**文件变更**:
+```
+创建文件:
++ src/pages/GeoMappingNetwork/index.tsx (600+ lines)
++ src/components/charts/ThreeLayerNetworkGraph.tsx (300+ lines)
+
+修改文件:
+* src/App.tsx (添加GeoMappingNetwork路由，删除ContentMapping)
+* src/components/layout/Sidebar.tsx (更新菜单项，清理未使用导入)
+
+删除文件:
+- src/pages/ContentMapping/index.tsx
+- src/pages/ContentMapping/ (目录)
+```
+
+**Mock数据集**:
+- 20个真实SweetNight prompt (best mattress for back pain, SweetNight vs Casper等)
+- 8种内容类型 (YouTube Reviews, Comparison Articles, Amazon A+等)
+- 7个引用平台 (Professional Reviews, YouTube Channels, Amazon等)
+- 61个连接关系
+
+**设计规范**:
+- 深色背景 (#0f1729)
+- 绿色强调色 (#6ee7b7)
+- 全英文界面
+- 专业数据可视化风格
+
+**访问地址**: http://localhost:5173/geo-mapping-network
+
+**下一步建议**:
+- [ ] 集成Neo4j后端真实数据源
+- [ ] 添加节点拖拽功能
+- [ ] 实现图表导出 (PNG/SVG)
+- [ ] 添加时间轴筛选
+- [ ] 实现连接线强度动态调整
+- [ ] 添加prompt关系边的可视化
+- [ ] 集成InfraNodus文本分析

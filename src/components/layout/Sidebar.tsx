@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Drawer,
@@ -10,6 +10,11 @@ import {
   Typography,
   Divider,
   ListSubheader,
+  Avatar,
+  Card,
+  CardContent,
+  Chip,
+  Button,
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
@@ -29,8 +34,10 @@ import {
   Help as HelpIcon,
   LocalOffer as LocalOfferIcon,
   ShoppingCart as ShoppingCartIcon,
-  Hub as HubIcon,
+  DeviceHub as DeviceHubIcon,
+  Logout as LogoutIcon,
 } from '@mui/icons-material';
+import { useAuth } from '@/contexts/AuthContext';
 
 const SIDEBAR_WIDTH = 280;
 
@@ -60,7 +67,7 @@ const navSections: NavSection[] = [
     title: 'Awareness',
     items: [
       { path: '/battlefield', label: 'Situational Awareness', icon: <LandscapeIcon />, color: '#EF4444' },
-      { path: '/content-mapping', label: 'Content Mapping', icon: <HubIcon />, color: '#3B82F6' },
+      { path: '/geo-mapping-network', label: 'Content Mapping', icon: <DeviceHubIcon />, color: '#8B5CF6' },
       { path: '/coverage', label: 'Content Coverage', icon: <CoverageIcon />, color: '#10B981' },
       { path: '/citation-strength', label: 'Citation Strength', icon: <StarIcon />, color: '#EC4899' },
     ],
@@ -103,6 +110,29 @@ const navSections: NavSection[] = [
 ];
 
 export default function Sidebar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return 'error';
+      case 'editor':
+        return 'warning';
+      case 'analyst':
+        return 'info';
+      case 'viewer':
+        return 'success';
+      default:
+        return 'default';
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <Drawer
       variant="permanent"
@@ -114,6 +144,8 @@ export default function Sidebar() {
           boxSizing: 'border-box',
           borderRight: '1px solid',
           borderColor: 'divider',
+          display: 'flex',
+          flexDirection: 'column',
         },
       }}
     >
@@ -129,8 +161,57 @@ export default function Sidebar() {
 
       <Divider />
 
+      {/* User Info Card */}
+      {user && (
+        <Box sx={{ p: 2 }}>
+          <Card
+            sx={{
+              background: 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)',
+              border: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
+            <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <Avatar
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    bgcolor: 'primary.main',
+                    fontWeight: 700,
+                  }}
+                >
+                  {user.username[0].toUpperCase()}
+                </Avatar>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography
+                    variant="body2"
+                    fontWeight={600}
+                    sx={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {user.username}
+                  </Typography>
+                  <Chip
+                    label={user.role}
+                    size="small"
+                    color={getRoleColor(user.role) as any}
+                    sx={{ mt: 0.5, height: 20, fontSize: '0.7rem' }}
+                  />
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
+      <Divider />
+
       {/* Navigation */}
-      <List sx={{ px: 2, py: 1 }}>
+      <List sx={{ px: 2, py: 1, flex: 1, overflow: 'auto' }}>
         {navSections.map((section, sectionIndex) => (
           <Box key={sectionIndex}>
             {/* Section Title */}
@@ -200,6 +281,25 @@ export default function Sidebar() {
           </Box>
         ))}
       </List>
+
+      {/* Logout Button */}
+      <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider' }}>
+        <Button
+          fullWidth
+          variant="outlined"
+          color="error"
+          startIcon={<LogoutIcon />}
+          onClick={handleLogout}
+          sx={{
+            py: 1,
+            borderRadius: 1,
+            textTransform: 'none',
+            fontWeight: 600,
+          }}
+        >
+          Logout
+        </Button>
+      </Box>
     </Drawer>
   );
 }
