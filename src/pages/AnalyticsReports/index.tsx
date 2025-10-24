@@ -65,13 +65,13 @@ interface ReportConfig {
 
 // Mock report data
 const mockReportData: ReportMetrics[] = [
-  { date: '2025-01-01', citations: 12, geoScore: 75.2, views: 15800, ctr: 4.2, gmv: 8750 },
-  { date: '2025-01-02', citations: 15, geoScore: 76.5, views: 18920, ctr: 5.1, gmv: 11200 },
-  { date: '2025-01-03', citations: 18, geoScore: 77.1, views: 22400, ctr: 4.8, gmv: 9850 },
-  { date: '2025-01-04', citations: 21, geoScore: 78.3, views: 24800, ctr: 6.2, gmv: 15200 },
-  { date: '2025-01-05', citations: 19, geoScore: 77.9, views: 19500, ctr: 5.5, gmv: 12800 },
-  { date: '2025-01-06', citations: 23, geoScore: 78.8, views: 28900, ctr: 6.8, gmv: 17500 },
-  { date: '2025-01-07', citations: 26, geoScore: 79.4, views: 31200, ctr: 7.2, gmv: 19400 },
+  { date: '2025-09-01', citations: 12, geoScore: 75.2, views: 15800, ctr: 4.2, gmv: 8750 },
+  { date: '2025-09-02', citations: 15, geoScore: 76.5, views: 18920, ctr: 5.1, gmv: 11200 },
+  { date: '2025-09-03', citations: 18, geoScore: 77.1, views: 22400, ctr: 4.8, gmv: 9850 },
+  { date: '2025-09-04', citations: 21, geoScore: 78.3, views: 24800, ctr: 6.2, gmv: 15200 },
+  { date: '2025-09-05', citations: 19, geoScore: 77.9, views: 19500, ctr: 5.5, gmv: 12800 },
+  { date: '2025-09-06', citations: 23, geoScore: 78.8, views: 28900, ctr: 6.8, gmv: 17500 },
+  { date: '2025-09-07', citations: 26, geoScore: 79.4, views: 31200, ctr: 7.2, gmv: 19400 },
 ];
 
 const mockPlatformData = [
@@ -111,8 +111,8 @@ const availableMetrics = [
 export default function AnalyticsReports() {
   const [reportConfig, setReportConfig] = useState<ReportConfig>({
     reportType: 'weekly',
-    startDate: '2025-01-01',
-    endDate: '2025-01-07',
+    startDate: '2025-09-01',
+    endDate: '2025-09-07',
     includeMetrics: ['Citations', 'GEO Score', 'Views', 'GMV'],
     exportFormat: 'pdf',
   });

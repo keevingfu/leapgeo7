@@ -39,27 +39,27 @@ interface CoverageData {
 
 // Mock coverage data
 const mockCoverageData: CoverageData[] = [
-  { promptId: '1', prompt: 'Best mattress for back pain relief', pLevel: 'P0', month: '2025-01', coverageStatus: 'covered', contentCount: 5, channels: ['YouTube', 'Blog', 'Reddit', 'Medium', 'Amazon'], geoScore: 92 },
-  { promptId: '2', prompt: 'Memory foam vs spring mattress comparison', pLevel: 'P0', month: '2025-01', coverageStatus: 'covered', contentCount: 4, channels: ['YouTube', 'Blog', 'Quora', 'Medium'], geoScore: 90 },
-  { promptId: '3', prompt: 'Cooling mattress for hot sleepers', pLevel: 'P0', month: '2025-01', coverageStatus: 'partial', contentCount: 2, channels: ['YouTube', 'Blog'], geoScore: 88 },
-  { promptId: '4', prompt: 'Mattress for side sleepers with shoulder pain', pLevel: 'P0', month: '2025-02', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 91 },
+  { promptId: '1', prompt: 'Best mattress for back pain relief', pLevel: 'P0', month: '2025-09', coverageStatus: 'covered', contentCount: 5, channels: ['YouTube', 'Blog', 'Reddit', 'Medium', 'Amazon'], geoScore: 92 },
+  { promptId: '2', prompt: 'Memory foam vs spring mattress comparison', pLevel: 'P0', month: '2025-09', coverageStatus: 'covered', contentCount: 4, channels: ['YouTube', 'Blog', 'Quora', 'Medium'], geoScore: 90 },
+  { promptId: '3', prompt: 'Cooling mattress for hot sleepers', pLevel: 'P0', month: '2025-09', coverageStatus: 'partial', contentCount: 2, channels: ['YouTube', 'Blog'], geoScore: 88 },
+  { promptId: '4', prompt: 'Mattress for side sleepers with shoulder pain', pLevel: 'P0', month: '2025-10', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 91 },
 
-  { promptId: '5', prompt: 'How to clean a memory foam mattress', pLevel: 'P1', month: '2025-01', coverageStatus: 'covered', contentCount: 3, channels: ['Blog', 'Reddit', 'Quora'], geoScore: 78 },
-  { promptId: '6', prompt: 'Mattress firmness guide', pLevel: 'P1', month: '2025-01', coverageStatus: 'partial', contentCount: 2, channels: ['Blog', 'Medium'], geoScore: 82 },
-  { promptId: '7', prompt: 'Best mattress topper for comfort', pLevel: 'P1', month: '2025-02', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 76 },
-  { promptId: '8', prompt: 'Mattress size comparison chart', pLevel: 'P1', month: '2025-02', coverageStatus: 'covered', contentCount: 2, channels: ['Blog', 'LinkedIn'], geoScore: 80 },
-  { promptId: '9', prompt: 'Organic mattress benefits', pLevel: 'P1', month: '2025-03', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 79 },
+  { promptId: '5', prompt: 'How to clean a memory foam mattress', pLevel: 'P1', month: '2025-09', coverageStatus: 'covered', contentCount: 3, channels: ['Blog', 'Reddit', 'Quora'], geoScore: 78 },
+  { promptId: '6', prompt: 'Mattress firmness guide', pLevel: 'P1', month: '2025-09', coverageStatus: 'partial', contentCount: 2, channels: ['Blog', 'Medium'], geoScore: 82 },
+  { promptId: '7', prompt: 'Best mattress topper for comfort', pLevel: 'P1', month: '2025-10', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 76 },
+  { promptId: '8', prompt: 'Mattress size comparison chart', pLevel: 'P1', month: '2025-10', coverageStatus: 'covered', contentCount: 2, channels: ['Blog', 'LinkedIn'], geoScore: 80 },
+  { promptId: '9', prompt: 'Organic mattress benefits', pLevel: 'P1', month: '2025-11', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 79 },
 
-  { promptId: '10', prompt: 'Mattress warranty coverage explained', pLevel: 'P2', month: '2025-02', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 65 },
-  { promptId: '11', prompt: 'How long does a mattress last', pLevel: 'P2', month: '2025-02', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 68 },
-  { promptId: '12', prompt: 'Mattress delivery and setup process', pLevel: 'P2', month: '2025-03', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 62 },
-  { promptId: '13', prompt: 'Mattress protector buying guide', pLevel: 'P2', month: '2025-03', coverageStatus: 'covered', contentCount: 2, channels: ['Amazon', 'Blog'], geoScore: 70 },
-  { promptId: '14', prompt: 'Mattress trial period policies', pLevel: 'P2', month: '2025-03', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 67 },
+  { promptId: '10', prompt: 'Mattress warranty coverage explained', pLevel: 'P2', month: '2025-10', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 65 },
+  { promptId: '11', prompt: 'How long does a mattress last', pLevel: 'P2', month: '2025-10', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 68 },
+  { promptId: '12', prompt: 'Mattress delivery and setup process', pLevel: 'P2', month: '2025-11', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 62 },
+  { promptId: '13', prompt: 'Mattress protector buying guide', pLevel: 'P2', month: '2025-11', coverageStatus: 'covered', contentCount: 2, channels: ['Amazon', 'Blog'], geoScore: 70 },
+  { promptId: '14', prompt: 'Mattress trial period policies', pLevel: 'P2', month: '2025-11', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 67 },
 
-  { promptId: '15', prompt: 'Mattress recycling options', pLevel: 'P3', month: '2025-03', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 45 },
-  { promptId: '16', prompt: 'History of mattress manufacturing', pLevel: 'P3', month: '2025-04', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 42 },
-  { promptId: '17', prompt: 'Mattress materials sourcing', pLevel: 'P3', month: '2025-04', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 48 },
-  { promptId: '18', prompt: 'Custom mattress design services', pLevel: 'P3', month: '2025-04', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 50 },
+  { promptId: '15', prompt: 'Mattress recycling options', pLevel: 'P3', month: '2025-11', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 45 },
+  { promptId: '16', prompt: 'History of mattress manufacturing', pLevel: 'P3', month: '2025-12', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 42 },
+  { promptId: '17', prompt: 'Mattress materials sourcing', pLevel: 'P3', month: '2025-12', coverageStatus: 'uncovered', contentCount: 0, channels: [], geoScore: 48 },
+  { promptId: '18', prompt: 'Custom mattress design services', pLevel: 'P3', month: '2025-12', coverageStatus: 'partial', contentCount: 1, channels: ['Blog'], geoScore: 50 },
 ];
 
 const pLevelColors: Record<PLevel, string> = {

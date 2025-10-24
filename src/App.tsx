@@ -21,6 +21,9 @@ import ContentCoverage from '@/pages/ContentCoverage';
 import CitationStrength from '@/pages/CitationStrength';
 import UserManagement from '@/pages/UserManagement';
 import Help from '@/pages/Help';
+import Offers from '@/pages/Offers';
+import Orders from '@/pages/Orders';
+import ContentMapping from '@/pages/ContentMapping';
 
 function App() {
   return (
@@ -39,6 +42,7 @@ function App() {
           <Route path="citations" element={<CitationTracker />} />
           <Route path="kpi" element={<KPIDashboard />} />
           <Route path="battlefield" element={<BattlefieldMap />} />
+          <Route path="content-mapping" element={<ContentMapping />} />
           <Route path="workflow" element={<WorkflowMonitor />} />
           <Route path="settings" element={<SystemSettings />} />
           <Route path="templates" element={<TemplateEditor />} />
@@ -47,6 +51,10 @@ function App() {
           <Route path="citation-strength" element={<CitationStrength />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="help" element={<Help />} />
+
+          {/* Conversion Pages */}
+          <Route path="offers" element={<Offers />} />
+          <Route path="orders" element={<Orders />} />
 
           {/* 404 fallback */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

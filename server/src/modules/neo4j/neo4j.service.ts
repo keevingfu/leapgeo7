@@ -174,7 +174,7 @@ export class Neo4jService implements OnModuleInit, OnModuleDestroy {
         ORDER BY p.score DESC
         LIMIT $limit
         `,
-        { pLevels, limit }
+        { pLevels, limit: neo4j.int(limit) }
       );
 
       return result.records.map((record) => ({

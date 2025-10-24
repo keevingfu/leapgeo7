@@ -59,7 +59,26 @@ export default function GraphVisualization({
 
     // Prepare data for D3
     const nodeData = nodes.map((node) => ({ ...node }));
-    const edgeData = edges.map((edge) => ({ ...edge }));
+
+    // Create node ID set for validation
+    const nodeIds = new Set(nodes.map(n => n.id));
+
+    // Filter and deduplicate edges - only keep edges with valid nodes
+    const validEdges = edges.filter(edge =>
+      nodeIds.has(edge.source as string) && nodeIds.has(edge.target as string)
+    );
+
+    // Remove duplicate edges (same source-target pair)
+    const edgeMap = new Map<string, GraphEdge>();
+    validEdges.forEach(edge => {
+      const key = `${edge.source}-${edge.target}`;
+      const reverseKey = `${edge.target}-${edge.source}`;
+      if (!edgeMap.has(key) && !edgeMap.has(reverseKey)) {
+        edgeMap.set(key, edge);
+      }
+    });
+
+    const edgeData = Array.from(edgeMap.values()).map(edge => ({ ...edge }));
 
     // Create force simulation
     const simulation = d3

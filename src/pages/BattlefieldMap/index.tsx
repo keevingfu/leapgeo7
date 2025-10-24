@@ -351,7 +351,7 @@ export default function BattlefieldMap() {
           </Box>
           <Box sx={{ flex: 1 }}>
             <Typography variant="h4" component="h1" fontWeight={600}>
-              Battlefield Map
+              Situational Awareness
             </Typography>
             <Typography variant="body1" color="text.secondary">
               D3.js Force-Directed Graph - Competitive Intelligence Network

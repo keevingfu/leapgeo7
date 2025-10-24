@@ -60,7 +60,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://youtube.com/watch?v=abc123',
     citationStrength: 'direct',
     prompt: 'Best mattress for back pain relief',
-    dateDiscovered: '2025-01-05',
+    dateDiscovered: '2025-09-05',
     aiIndexed: true,
   },
   {
@@ -70,7 +70,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://reddit.com/r/mattress/comments/xyz',
     citationStrength: 'direct',
     prompt: 'Memory foam mattress comparison',
-    dateDiscovered: '2025-01-06',
+    dateDiscovered: '2025-09-06',
     aiIndexed: true,
   },
   {
@@ -80,7 +80,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://medium.com/@author/mattress-guide',
     citationStrength: 'referenced',
     prompt: 'Cooling mattress for hot sleepers',
-    dateDiscovered: '2025-01-07',
+    dateDiscovered: '2025-09-07',
     aiIndexed: true,
   },
   {
@@ -90,7 +90,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://quora.com/question/mattress-recommendation',
     citationStrength: 'referenced',
     prompt: 'Mattress for side sleepers',
-    dateDiscovered: '2025-01-08',
+    dateDiscovered: '2025-09-08',
     aiIndexed: false,
   },
   {
@@ -100,7 +100,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://sleepblog.com/mattress-reviews',
     citationStrength: 'mentioned',
     prompt: 'Affordable mattress options',
-    dateDiscovered: '2025-01-09',
+    dateDiscovered: '2025-09-09',
     aiIndexed: true,
   },
   {
@@ -110,7 +110,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://amazon.com/product/B08XYZ',
     citationStrength: 'direct',
     prompt: 'Hybrid mattress reviews',
-    dateDiscovered: '2025-01-10',
+    dateDiscovered: '2025-09-10',
     aiIndexed: true,
   },
   {
@@ -120,7 +120,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://linkedin.com/pulse/sleep-wellness',
     citationStrength: 'mentioned',
     prompt: 'Sleep quality improvement',
-    dateDiscovered: '2025-01-11',
+    dateDiscovered: '2025-09-11',
     aiIndexed: false,
   },
   {
@@ -130,7 +130,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://youtube.com/watch?v=def456',
     citationStrength: 'referenced',
     prompt: 'Eco-friendly mattress guide',
-    dateDiscovered: '2025-01-12',
+    dateDiscovered: '2025-09-12',
     aiIndexed: true,
   },
   {
@@ -140,7 +140,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://reddit.com/r/sleep/comments/abc',
     citationStrength: 'mentioned',
     prompt: 'Mattress durability test',
-    dateDiscovered: '2025-01-13',
+    dateDiscovered: '2025-09-13',
     aiIndexed: true,
   },
   {
@@ -150,7 +150,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://medium.com/@expert/sleep-science',
     citationStrength: 'direct',
     prompt: 'Best mattress brands 2025',
-    dateDiscovered: '2025-01-14',
+    dateDiscovered: '2025-09-14',
     aiIndexed: true,
   },
   {
@@ -160,7 +160,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://quora.com/question/mattress-comparison',
     citationStrength: 'direct',
     prompt: 'Mattress buying guide',
-    dateDiscovered: '2025-01-15',
+    dateDiscovered: '2025-09-15',
     aiIndexed: false,
   },
   {
@@ -170,7 +170,7 @@ const mockCitationData: CitationData[] = [
     citationUrl: 'https://homeblog.com/bedroom-essentials',
     citationStrength: 'referenced',
     prompt: 'Bedroom setup guide',
-    dateDiscovered: '2025-01-16',
+    dateDiscovered: '2025-09-16',
     aiIndexed: true,
   },
 ];

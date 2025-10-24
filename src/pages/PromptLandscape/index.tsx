@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Box,
   Paper,
@@ -42,30 +42,30 @@ import GraphVisualization, {
 // Mock roadmap data for scatter plot
 const mockRoadmapItems: RoadmapItem[] = [
   // P0 - Core prompts (high GEO score, high Quick Win)
-  { id: '1', month: '2025-01', prompt: 'Best mattress for back pain relief', pLevel: 'P0', enhancedGeoScore: 92, quickWinIndex: 88, geoIntentType: 'commercial', contentStrategy: 'Expert review with medical citations', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
-  { id: '2', month: '2025-01', prompt: 'Memory foam vs spring mattress comparison', pLevel: 'P0', enhancedGeoScore: 90, quickWinIndex: 85, geoIntentType: 'informational', contentStrategy: 'Detailed comparison guide', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
-  { id: '3', month: '2025-01', prompt: 'Cooling mattress for hot sleepers', pLevel: 'P0', enhancedGeoScore: 88, quickWinIndex: 82, geoIntentType: 'commercial', contentStrategy: 'Temperature regulation technology review', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
-  { id: '4', month: '2025-02', prompt: 'Mattress for side sleepers with shoulder pain', pLevel: 'P0', enhancedGeoScore: 91, quickWinIndex: 87, geoIntentType: 'commercial', contentStrategy: 'Pressure relief analysis', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
+  { id: '1', month: '2025-09', prompt: 'Best mattress for back pain relief', pLevel: 'P0', enhancedGeoScore: 92, quickWinIndex: 88, geoIntentType: 'commercial', contentStrategy: 'Expert review with medical citations', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
+  { id: '2', month: '2025-09', prompt: 'Memory foam vs spring mattress comparison', pLevel: 'P0', enhancedGeoScore: 90, quickWinIndex: 85, geoIntentType: 'informational', contentStrategy: 'Detailed comparison guide', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
+  { id: '3', month: '2025-09', prompt: 'Cooling mattress for hot sleepers', pLevel: 'P0', enhancedGeoScore: 88, quickWinIndex: 82, geoIntentType: 'commercial', contentStrategy: 'Temperature regulation technology review', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
+  { id: '4', month: '2025-10', prompt: 'Mattress for side sleepers with shoulder pain', pLevel: 'P0', enhancedGeoScore: 91, quickWinIndex: 87, geoIntentType: 'commercial', contentStrategy: 'Pressure relief analysis', geoFriendliness: 5, contentHoursEst: 8, createdAt: new Date(), updatedAt: new Date() },
 
   // P1 - Important prompts (good GEO score, good Quick Win)
-  { id: '5', month: '2025-01', prompt: 'How to clean a memory foam mattress', pLevel: 'P1', enhancedGeoScore: 78, quickWinIndex: 72, geoIntentType: 'informational', contentStrategy: 'Step-by-step maintenance guide', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
-  { id: '6', month: '2025-01', prompt: 'Mattress firmness guide', pLevel: 'P1', enhancedGeoScore: 82, quickWinIndex: 75, geoIntentType: 'informational', contentStrategy: 'Firmness scale explanation', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
-  { id: '7', month: '2025-02', prompt: 'Best mattress topper for comfort', pLevel: 'P1', enhancedGeoScore: 76, quickWinIndex: 68, geoIntentType: 'commercial', contentStrategy: 'Topper material comparison', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
-  { id: '8', month: '2025-02', prompt: 'Mattress size comparison chart', pLevel: 'P1', enhancedGeoScore: 80, quickWinIndex: 74, geoIntentType: 'informational', contentStrategy: 'Visual size guide', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
-  { id: '9', month: '2025-03', prompt: 'Organic mattress benefits', pLevel: 'P1', enhancedGeoScore: 79, quickWinIndex: 70, geoIntentType: 'informational', contentStrategy: 'Eco-friendly materials analysis', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
+  { id: '5', month: '2025-09', prompt: 'How to clean a memory foam mattress', pLevel: 'P1', enhancedGeoScore: 78, quickWinIndex: 72, geoIntentType: 'informational', contentStrategy: 'Step-by-step maintenance guide', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
+  { id: '6', month: '2025-09', prompt: 'Mattress firmness guide', pLevel: 'P1', enhancedGeoScore: 82, quickWinIndex: 75, geoIntentType: 'informational', contentStrategy: 'Firmness scale explanation', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
+  { id: '7', month: '2025-10', prompt: 'Best mattress topper for comfort', pLevel: 'P1', enhancedGeoScore: 76, quickWinIndex: 68, geoIntentType: 'commercial', contentStrategy: 'Topper material comparison', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
+  { id: '8', month: '2025-10', prompt: 'Mattress size comparison chart', pLevel: 'P1', enhancedGeoScore: 80, quickWinIndex: 74, geoIntentType: 'informational', contentStrategy: 'Visual size guide', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
+  { id: '9', month: '2025-11', prompt: 'Organic mattress benefits', pLevel: 'P1', enhancedGeoScore: 79, quickWinIndex: 70, geoIntentType: 'informational', contentStrategy: 'Eco-friendly materials analysis', geoFriendliness: 4, contentHoursEst: 6, createdAt: new Date(), updatedAt: new Date() },
 
   // P2 - Opportunity prompts (moderate scores)
-  { id: '10', month: '2025-02', prompt: 'Mattress warranty coverage explained', pLevel: 'P2', enhancedGeoScore: 65, quickWinIndex: 58, geoIntentType: 'informational', contentStrategy: 'Warranty terms breakdown', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
-  { id: '11', month: '2025-02', prompt: 'How long does a mattress last', pLevel: 'P2', enhancedGeoScore: 68, quickWinIndex: 62, geoIntentType: 'informational', contentStrategy: 'Lifespan by material type', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
-  { id: '12', month: '2025-03', prompt: 'Mattress delivery and setup process', pLevel: 'P2', enhancedGeoScore: 62, quickWinIndex: 55, geoIntentType: 'informational', contentStrategy: 'Unboxing and installation guide', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
-  { id: '13', month: '2025-03', prompt: 'Mattress protector buying guide', pLevel: 'P2', enhancedGeoScore: 70, quickWinIndex: 64, geoIntentType: 'commercial', contentStrategy: 'Protector features comparison', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
-  { id: '14', month: '2025-03', prompt: 'Mattress trial period policies', pLevel: 'P2', enhancedGeoScore: 67, quickWinIndex: 60, geoIntentType: 'informational', contentStrategy: 'Trial policy comparison', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
+  { id: '10', month: '2025-10', prompt: 'Mattress warranty coverage explained', pLevel: 'P2', enhancedGeoScore: 65, quickWinIndex: 58, geoIntentType: 'informational', contentStrategy: 'Warranty terms breakdown', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
+  { id: '11', month: '2025-10', prompt: 'How long does a mattress last', pLevel: 'P2', enhancedGeoScore: 68, quickWinIndex: 62, geoIntentType: 'informational', contentStrategy: 'Lifespan by material type', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
+  { id: '12', month: '2025-11', prompt: 'Mattress delivery and setup process', pLevel: 'P2', enhancedGeoScore: 62, quickWinIndex: 55, geoIntentType: 'informational', contentStrategy: 'Unboxing and installation guide', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
+  { id: '13', month: '2025-11', prompt: 'Mattress protector buying guide', pLevel: 'P2', enhancedGeoScore: 70, quickWinIndex: 64, geoIntentType: 'commercial', contentStrategy: 'Protector features comparison', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
+  { id: '14', month: '2025-11', prompt: 'Mattress trial period policies', pLevel: 'P2', enhancedGeoScore: 67, quickWinIndex: 60, geoIntentType: 'informational', contentStrategy: 'Trial policy comparison', geoFriendliness: 3, contentHoursEst: 5, createdAt: new Date(), updatedAt: new Date() },
 
   // P3 - Reserve prompts (lower scores)
-  { id: '15', month: '2025-03', prompt: 'Mattress recycling options', pLevel: 'P3', enhancedGeoScore: 45, quickWinIndex: 38, geoIntentType: 'informational', contentStrategy: 'Disposal and recycling guide', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
-  { id: '16', month: '2025-04', prompt: 'History of mattress manufacturing', pLevel: 'P3', enhancedGeoScore: 42, quickWinIndex: 35, geoIntentType: 'informational', contentStrategy: 'Historical overview article', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
-  { id: '17', month: '2025-04', prompt: 'Mattress materials sourcing', pLevel: 'P3', enhancedGeoScore: 48, quickWinIndex: 40, geoIntentType: 'informational', contentStrategy: 'Supply chain transparency', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
-  { id: '18', month: '2025-04', prompt: 'Custom mattress design services', pLevel: 'P3', enhancedGeoScore: 50, quickWinIndex: 43, geoIntentType: 'commercial', contentStrategy: 'Customization options overview', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
+  { id: '15', month: '2025-11', prompt: 'Mattress recycling options', pLevel: 'P3', enhancedGeoScore: 45, quickWinIndex: 38, geoIntentType: 'informational', contentStrategy: 'Disposal and recycling guide', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
+  { id: '16', month: '2025-12', prompt: 'History of mattress manufacturing', pLevel: 'P3', enhancedGeoScore: 42, quickWinIndex: 35, geoIntentType: 'informational', contentStrategy: 'Historical overview article', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
+  { id: '17', month: '2025-12', prompt: 'Mattress materials sourcing', pLevel: 'P3', enhancedGeoScore: 48, quickWinIndex: 40, geoIntentType: 'informational', contentStrategy: 'Supply chain transparency', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
+  { id: '18', month: '2025-12', prompt: 'Custom mattress design services', pLevel: 'P3', enhancedGeoScore: 50, quickWinIndex: 43, geoIntentType: 'commercial', contentStrategy: 'Customization options overview', geoFriendliness: 2, contentHoursEst: 3, createdAt: new Date(), updatedAt: new Date() },
 ];
 
 const pLevelColors: Record<PLevel, string> = {
@@ -142,7 +142,7 @@ export default function PromptLandscape() {
   };
 
   // API functions for Knowledge Graph
-  const fetchGraphData = async () => {
+  const fetchGraphData = useCallback(async () => {
     setGraphLoading(true);
     setGraphError(null);
     try {
@@ -151,31 +151,38 @@ export default function PromptLandscape() {
         params.append('pLevels', selectedPLevels.join(','));
       }
 
+      console.log('Fetching graph data from:', `http://localhost:3001/api/v1/prompt-landscape?${params}`);
       const response = await fetch(`http://localhost:3001/api/v1/prompt-landscape?${params}`);
+      console.log('Response status:', response.status);
       if (!response.ok) {
-        throw new Error('Failed to fetch graph data');
+        throw new Error(`Failed to fetch graph data: ${response.status}`);
       }
       const result = await response.json();
+      console.log('Graph data received:', result);
       setGraphData(result.data);
     } catch (err: any) {
+      console.error('Error fetching graph data:', err);
       setGraphError(err.message);
     } finally {
       setGraphLoading(false);
     }
-  };
+  }, [selectedPLevels]);
 
-  const fetchContentGaps = async () => {
+  const fetchContentGaps = useCallback(async () => {
     try {
+      console.log('Fetching content gaps from:', 'http://localhost:3001/api/v1/prompt-landscape/gaps');
       const response = await fetch('http://localhost:3001/api/v1/prompt-landscape/gaps');
+      console.log('Gaps response status:', response.status);
       if (!response.ok) {
-        throw new Error('Failed to fetch content gaps');
+        throw new Error(`Failed to fetch content gaps: ${response.status}`);
       }
       const result = await response.json();
+      console.log('Content gaps received:', result);
       setContentGaps(result.data.recommendations || []);
     } catch (err: any) {
       console.error('Error fetching content gaps:', err);
     }
-  };
+  }, []);
 
   const handlePLevelToggle = (pLevel: string) => {
     setSelectedPLevels((prev) =>
@@ -201,7 +208,7 @@ export default function PromptLandscape() {
       fetchGraphData();
       fetchContentGaps();
     }
-  }, [activeTab, selectedPLevels]);
+  }, [activeTab, fetchGraphData, fetchContentGaps]);
 
   // D3 scatter plot rendering
   useEffect(() => {
@@ -557,6 +564,7 @@ export default function PromptLandscape() {
           {graphLoading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
               <CircularProgress />
+              <Typography sx={{ ml: 2 }}>Loading graph data...</Typography>
             </Box>
           )}
 
@@ -566,71 +574,79 @@ export default function PromptLandscape() {
             </Alert>
           )}
 
-          {!graphLoading && !graphError && graphData && (
+          {!graphLoading && !graphData && (
+            <Alert severity="warning" sx={{ mb: 3 }}>
+              No graph data available. Click Refresh to load data.
+            </Alert>
+          )}
+
+          {!graphLoading && (
             <>
               {/* Statistics Cards */}
-              <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid item xs={12} sm={6} md={2.4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Total Prompts
-                      </Typography>
-                      <Typography variant="h4" fontWeight={700}>
-                        {graphData.stats.totalPrompts}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+              {graphData && graphData.stats && (
+                <Grid container spacing={3} sx={{ mb: 3 }}>
+                  <Grid item xs={12} sm={6} md={2.4}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Total Prompts
+                        </Typography>
+                        <Typography variant="h4" fontWeight={700}>
+                          {graphData.stats.totalPrompts}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={2.4}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Coverage Rate
+                        </Typography>
+                        <Typography variant="h4" fontWeight={700} color="#10B981">
+                          {graphData.stats.coverageRate.toFixed(1)}%
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={2.4}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Covered
+                        </Typography>
+                        <Typography variant="h4" fontWeight={700} color="#10B981">
+                          {graphData.stats.coveredPrompts}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={2.4}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Uncovered
+                        </Typography>
+                        <Typography variant="h4" fontWeight={700} color="#EF4444">
+                          {graphData.stats.uncoveredPrompts}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={2.4}>
+                    <Card>
+                      <CardContent>
+                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                          Relationships
+                        </Typography>
+                        <Typography variant="h4" fontWeight={700}>
+                          {graphData.stats.totalRelationships}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6} md={2.4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Coverage Rate
-                      </Typography>
-                      <Typography variant="h4" fontWeight={700} color="#10B981">
-                        {graphData.stats.coverageRate.toFixed(1)}%
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={2.4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Covered
-                      </Typography>
-                      <Typography variant="h4" fontWeight={700} color="#10B981">
-                        {graphData.stats.coveredPrompts}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={2.4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Uncovered
-                      </Typography>
-                      <Typography variant="h4" fontWeight={700} color="#EF4444">
-                        {graphData.stats.uncoveredPrompts}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={2.4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Relationships
-                      </Typography>
-                      <Typography variant="h4" fontWeight={700}>
-                        {graphData.stats.totalRelationships}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+              )}
 
               <Grid container spacing={3}>
                 {/* Graph Visualization */}
@@ -658,24 +674,34 @@ export default function PromptLandscape() {
                       </Box>
                     </Box>
 
-                    <GraphVisualization
-                      nodes={graphData.nodes}
-                      edges={graphData.edges}
-                      width={1100}
-                      height={600}
-                      onNodeClick={handleNodeClick}
-                    />
+                    {graphData && graphData.nodes && graphData.nodes.length > 0 ? (
+                      <>
+                        <GraphVisualization
+                          nodes={graphData.nodes}
+                          edges={graphData.edges}
+                          width={1100}
+                          height={600}
+                          onNodeClick={handleNodeClick}
+                        />
 
-                    <Box sx={{ mt: 2, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Box sx={{ width: 16, height: 16, borderRadius: '50%', bgcolor: '#10B981', border: '2px solid #10B981' }} />
-                        <Typography variant="caption">Covered</Typography>
+                        <Box sx={{ mt: 2, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Box sx={{ width: 16, height: 16, borderRadius: '50%', bgcolor: '#10B981', border: '2px solid #10B981' }} />
+                            <Typography variant="caption">Covered</Typography>
+                          </Box>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Box sx={{ width: 16, height: 16, borderRadius: '50%', bgcolor: '#EF4444', border: '2px solid #EF4444', opacity: 0.4 }} />
+                            <Typography variant="caption">Uncovered</Typography>
+                          </Box>
+                        </Box>
+                      </>
+                    ) : (
+                      <Box sx={{ minHeight: 600, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="body1" color="text.secondary">
+                          No graph data available. Click Refresh to load data.
+                        </Typography>
                       </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Box sx={{ width: 16, height: 16, borderRadius: '50%', bgcolor: '#EF4444', border: '2px solid #EF4444', opacity: 0.4 }} />
-                        <Typography variant="caption">Uncovered</Typography>
-                      </Box>
-                    </Box>
+                    )}
                   </Paper>
                 </Grid>
 

@@ -71,7 +71,7 @@ const initialUsers: User[] = [
     email: 'john@sweetnight.com',
     role: 'admin',
     status: 'active',
-    lastLogin: '2025-01-21 10:30 AM',
+    lastLogin: '2025-09-21 10:30 AM',
     createdAt: '2024-12-01',
   },
   {
@@ -80,7 +80,7 @@ const initialUsers: User[] = [
     email: 'sarah@sweetnight.com',
     role: 'editor',
     status: 'active',
-    lastLogin: '2025-01-21 09:15 AM',
+    lastLogin: '2025-09-21 09:15 AM',
     createdAt: '2024-12-15',
   },
   {
@@ -89,8 +89,8 @@ const initialUsers: User[] = [
     email: 'mike@sweetnight.com',
     role: 'analyst',
     status: 'active',
-    lastLogin: '2025-01-20 03:45 PM',
-    createdAt: '2025-01-05',
+    lastLogin: '2025-09-20 03:45 PM',
+    createdAt: '2025-09-05',
   },
   {
     id: '4',
@@ -98,8 +98,8 @@ const initialUsers: User[] = [
     email: 'emily@sweetnight.com',
     role: 'viewer',
     status: 'active',
-    lastLogin: '2025-01-19 11:20 AM',
-    createdAt: '2025-01-10',
+    lastLogin: '2025-09-19 11:20 AM',
+    createdAt: '2025-09-10',
   },
   {
     id: '5',

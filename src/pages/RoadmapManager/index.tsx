@@ -32,7 +32,7 @@ import PriorityBadge from '@/components/PriorityBadge';
 const mockRoadmapData: RoadmapItem[] = [
   {
     id: '1',
-    month: '2025-01',
+    month: '2025-09',
     prompt: 'Best mattress for back pain relief',
     pLevel: 'P0',
     enhancedGeoScore: 92.5,
@@ -46,7 +46,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '2',
-    month: '2025-01',
+    month: '2025-09',
     prompt: 'Memory foam vs latex mattress comparison',
     pLevel: 'P0',
     enhancedGeoScore: 88.0,
@@ -60,7 +60,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '3',
-    month: '2025-01',
+    month: '2025-09',
     prompt: 'How to choose mattress firmness level',
     pLevel: 'P1',
     enhancedGeoScore: 78.5,
@@ -74,7 +74,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '4',
-    month: '2025-02',
+    month: '2025-10',
     prompt: 'Mattress warranty coverage explained',
     pLevel: 'P1',
     enhancedGeoScore: 76.0,
@@ -88,7 +88,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '5',
-    month: '2025-02',
+    month: '2025-10',
     prompt: 'Best cooling mattress for hot sleepers',
     pLevel: 'P2',
     enhancedGeoScore: 65.0,
@@ -102,7 +102,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '6',
-    month: '2025-02',
+    month: '2025-10',
     prompt: 'Mattress return policy guidelines',
     pLevel: 'P2',
     enhancedGeoScore: 62.5,
@@ -116,7 +116,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '7',
-    month: '2025-03',
+    month: '2025-11',
     prompt: 'Mattress size dimensions chart',
     pLevel: 'P3',
     enhancedGeoScore: 45.0,
@@ -130,7 +130,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
   {
     id: '8',
-    month: '2025-03',
+    month: '2025-11',
     prompt: 'Mattress cleaning and maintenance tips',
     pLevel: 'P3',
     enhancedGeoScore: 42.0,
@@ -144,7 +144,7 @@ const mockRoadmapData: RoadmapItem[] = [
   },
 ];
 
-const months = ['2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06'];
+const months = ['2025-09', '2025-10', '2025-11', '2025-12', '2025-05', '2025-06'];
 
 export default function RoadmapManager() {
   const [searchQuery, setSearchQuery] = useState('');

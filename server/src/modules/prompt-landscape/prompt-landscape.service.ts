@@ -110,10 +110,11 @@ export class PromptLandscapeService {
       contentCount: record.contentCount,
     }));
 
-    // Get edges (relationships)
+    // Get edges (relationships) - use WHERE id(p1) < id(p2) to avoid duplicates
     const edgesQuery = `
       MATCH (p1:Prompt)-[r:RELATES_TO]-(p2:Prompt)
-      ${whereClause.replace(/p\./g, 'p1.')}
+      WHERE id(p1) < id(p2)
+      ${whereClause ? 'AND ' + whereClause.replace(/WHERE /, '').replace(/p\./g, 'p1.') : ''}
       RETURN p1.id as source, p2.id as target, r.weight as weight,
              type(r) as relationType
     `;

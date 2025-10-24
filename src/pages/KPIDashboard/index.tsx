@@ -31,33 +31,33 @@ import {
 
 // Mock data for demonstration
 const citationRateData = [
-  { date: '2025-01-01', rate: 68.5 },
-  { date: '2025-01-02', rate: 70.2 },
-  { date: '2025-01-03', rate: 69.8 },
-  { date: '2025-01-04', rate: 71.5 },
-  { date: '2025-01-05', rate: 72.1 },
-  { date: '2025-01-06', rate: 71.8 },
-  { date: '2025-01-07', rate: 73.2 },
+  { date: '2025-09-01', rate: 68.5 },
+  { date: '2025-09-02', rate: 70.2 },
+  { date: '2025-09-03', rate: 69.8 },
+  { date: '2025-09-04', rate: 71.5 },
+  { date: '2025-09-05', rate: 72.1 },
+  { date: '2025-09-06', rate: 71.8 },
+  { date: '2025-09-07', rate: 73.2 },
 ];
 
 const geoScoreData = [
-  { date: '2025-01-01', score: 75.2 },
-  { date: '2025-01-02', score: 76.5 },
-  { date: '2025-01-03', score: 77.1 },
-  { date: '2025-01-04', score: 78.3 },
-  { date: '2025-01-05', score: 77.9 },
-  { date: '2025-01-06', rate: 78.8 },
-  { date: '2025-01-07', score: 79.4 },
+  { date: '2025-09-01', score: 75.2 },
+  { date: '2025-09-02', score: 76.5 },
+  { date: '2025-09-03', score: 77.1 },
+  { date: '2025-09-04', score: 78.3 },
+  { date: '2025-09-05', score: 77.9 },
+  { date: '2025-09-06', rate: 78.8 },
+  { date: '2025-09-07', score: 79.4 },
 ];
 
 const contentPerformanceData = [
-  { date: '2025-01-01', views: 12450, ctr: 4.2, gmv: 8750 },
-  { date: '2025-01-02', views: 15800, ctr: 5.1, gmv: 11200 },
-  { date: '2025-01-03', views: 18920, ctr: 4.8, gmv: 9850 },
-  { date: '2025-01-04', views: 22400, ctr: 6.2, gmv: 15200 },
-  { date: '2025-01-05', views: 19500, ctr: 5.5, gmv: 12800 },
-  { date: '2025-01-06', views: 24800, ctr: 6.8, gmv: 17500 },
-  { date: '2025-01-07', views: 28900, ctr: 7.2, gmv: 19400 },
+  { date: '2025-09-01', views: 12450, ctr: 4.2, gmv: 8750 },
+  { date: '2025-09-02', views: 15800, ctr: 5.1, gmv: 11200 },
+  { date: '2025-09-03', views: 18920, ctr: 4.8, gmv: 9850 },
+  { date: '2025-09-04', views: 22400, ctr: 6.2, gmv: 15200 },
+  { date: '2025-09-05', views: 19500, ctr: 5.5, gmv: 12800 },
+  { date: '2025-09-06', views: 24800, ctr: 6.8, gmv: 17500 },
+  { date: '2025-09-07', views: 28900, ctr: 7.2, gmv: 19400 },
 ];
 
 const channelPerformanceData = [
