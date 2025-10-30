@@ -39,6 +39,7 @@ import {
   SmartToy as SmartToyIcon,
   Assessment as AssessmentIcon,
   FormatQuote,
+  Rocket as RocketIcon,
 } from '@mui/icons-material';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -89,6 +90,7 @@ const navSections: NavSection[] = [
     items: [
       { path: '/battlefield', label: 'Situational Awareness', icon: <LandscapeIcon />, color: '#EF4444' },
       { path: '/geo-mapping-network', label: 'Content Mapping', icon: <DeviceHubIcon />, color: '#8B5CF6' },
+      { path: '/geo-strategy', label: 'GEO Strategy', icon: <RocketIcon />, color: '#FF6B6B' },
       { path: '/coverage', label: 'Content Coverage', icon: <CoverageIcon />, color: '#10B981' },
       { path: '/citation-strength', label: 'Citation Strength', icon: <StarIcon />, color: '#EC4899' },
     ],

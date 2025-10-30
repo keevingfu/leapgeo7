@@ -46,6 +46,7 @@ import Help from '@/pages/Help';
 import Offers from '@/pages/Offers';
 import Orders from '@/pages/Orders';
 import GeoMappingNetwork from '@/pages/GeoMappingNetwork';
+import GEOStrategy from '@/pages/GEOStrategy';
 
 function App() {
   return (
@@ -94,6 +95,7 @@ function App() {
             <Route path="kpi" element={<KPIDashboard />} />
             <Route path="battlefield" element={<BattlefieldMap />} />
             <Route path="geo-mapping-network" element={<GeoMappingNetwork />} />
+            <Route path="geo-strategy" element={<GEOStrategy />} />
             <Route path="workflow" element={<WorkflowMonitor />} />
             <Route path="settings" element={<SystemSettings />} />
             <Route path="templates" element={<TemplateEditor />} />
