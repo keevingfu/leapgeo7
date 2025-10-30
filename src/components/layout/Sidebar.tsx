@@ -36,6 +36,9 @@ import {
   ShoppingCart as ShoppingCartIcon,
   DeviceHub as DeviceHubIcon,
   Logout as LogoutIcon,
+  SmartToy as SmartToyIcon,
+  Assessment as AssessmentIcon,
+  FormatQuote,
 } from '@mui/icons-material';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -62,6 +65,24 @@ const navSections: NavSection[] = [
     ],
   },
 
+  // Data Pipeline Section (NEW)
+  {
+    title: 'Data Pipeline',
+    items: [
+      { path: '/data-acquisition', label: 'Data Acquisition Hub', icon: <DeviceHubIcon />, color: '#9333EA' },
+      { path: '/etl-pipeline', label: 'ETL Pipeline Viewer', icon: <ChartIcon />, color: '#0EA5E9' },
+    ],
+  },
+
+  // AI Generation Section (NEW)
+  {
+    title: 'AI Generation',
+    items: [
+      { path: '/aigc-studio', label: 'AIGC Studio', icon: <SmartToyIcon />, color: '#6366F1' },
+      { path: '/content-scoring', label: 'Content Scoring Center', icon: <AssessmentIcon />, color: '#10B981' },
+    ],
+  },
+
   // Awareness Section
   {
     title: 'Awareness',
@@ -83,6 +104,23 @@ const navSections: NavSection[] = [
       { path: '/generator', label: 'Content Generator', icon: <GeneratorIcon />, color: '#10B981' },
       { path: '/citations', label: 'Citation Tracker', icon: <CitationIcon />, color: '#EC4899' },
       { path: '/kpi', label: 'KPI Dashboard', icon: <ChartIcon />, color: '#6366F1' },
+    ],
+  },
+
+  // Publishing Section (NEW)
+  {
+    title: 'Publishing',
+    items: [
+      { path: '/multi-channel-publisher', label: 'Multi-Channel Publisher', icon: <DeviceHubIcon />, color: '#F59E0B' },
+      { path: '/citation-monitor', label: 'Citation Monitor', icon: <FormatQuote />, color: '#06B6D4' },
+    ],
+  },
+
+  // Analytics Section (NEW)
+  {
+    title: 'Analytics',
+    items: [
+      { path: '/analytics-dashboard', label: 'Analytics Dashboard', icon: <DashboardIcon />, color: '#8B5CF6' },
     ],
   },
 

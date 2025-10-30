@@ -6,90 +6,158 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **SweetNight GEO战场感知态势分析作战系统** is a GEO (Generative Engine Optimization) management platform designed for the SweetNight mattress brand. The system automates content production workflows and provides data-driven decision-making to maximize AI search engine citation rates and brand exposure.
 
-## Core Architecture
+## Development Commands
 
-This is a full-stack application with a 7-step automated workflow engine:
+### Frontend (Root)
+```bash
+# Development
+npm run dev              # Start Vite dev server (port 5173)
+npm run build            # TypeScript compile + production build
+npm run preview          # Preview production build
+npm run type-check       # Run TypeScript compiler without emitting files
+npm run lint             # ESLint on .ts/.tsx files
+npm run ci               # Full CI pipeline (type-check + build)
 
-1. **Roadmap Ingestor** - Monthly GEO roadmap intake
-2. **Content Registry** - Content inventory management
-3. **Prompt Landscape Builder** - P0-P3 priority hierarchy
-4. **Content Ingestor** - Multi-format content processing
-5. **Content Generator** - Multi-channel content distribution
-6. **Citation Tracker** - 7-platform monitoring
-7. **Feedback Analyzer** - KPI analysis and optimization
+# Testing
+npm test                 # Run Vitest tests
+npm run test:coverage    # Generate coverage report
+npx playwright test      # Run E2E tests (requires dev server running)
+npx playwright test --ui # Run E2E tests in UI mode
 
-### Technology Stack
-
-**Frontend:**
-- React 18 + TypeScript 5.0+
-- Material-UI 5.14+
-- D3.js 7.8+ (data visualization)
-- Redux Toolkit 2.0+ (state management)
-- React Query 5.0+ (data sync)
-
-**Backend:**
-- Node.js 20.0+ / NestJS 10.0+
-- Prisma 5.7+ (ORM)
-- Bull 4.11+ (task queues)
-
-**Databases:**
-- PostgreSQL 15.0+ (primary database)
-- Redis 7.2+ (cache/queues)
-- Neo4j 5.15+ (graph database for prompt relationships)
-
-**Storage & Integration:**
-- MinIO (object storage)
-- Firecrawl API (web scraping/citation tracking)
-- InfraNodus (text network analysis)
-- YouTube/Reddit/Medium/Quora APIs
-
-## Key Data Models
-
-### Roadmap Table
-```sql
-CREATE TABLE roadmap (
-    id UUID PRIMARY KEY,
-    month VARCHAR(20),
-    prompt TEXT NOT NULL,
-    p_level VARCHAR(2) CHECK (p_level IN ('P0', 'P1', 'P2', 'P3')),
-    enhanced_geo_score DECIMAL(5,2),
-    quickwin_index DECIMAL(5,2),
-    geo_intent_type VARCHAR(50),
-    content_strategy TEXT,
-    geo_friendliness INTEGER (1-5),
-    content_hours_est DECIMAL(4,1)
-);
+# Deployment
+npm run deploy           # Auto-deploy with default commit message
+npm run deploy:msg "msg" # Auto-deploy with custom commit message
+npm run health-check     # Check deployment environment status
+npm run setup:git        # Configure Git environment (first-time setup)
 ```
 
-### Content Registry Table
-```sql
-CREATE TABLE content_registry (
-    content_id VARCHAR(50) PRIMARY KEY,
-    covered_prompts TEXT[],
-    channel VARCHAR(30),
-    publish_status VARCHAR(20),
-    kpi_ctr DECIMAL(5,2),
-    kpi_views INTEGER,
-    kpi_gmv DECIMAL(10,2)
-);
+### Backend (server/)
+```bash
+cd server
+
+# Development
+npm run dev              # Start NestJS with ts-node (port 3001)
+npm run build            # Compile TypeScript to dist/
+npm start                # Run compiled code from dist/
+
+# Database (Prisma)
+npm run prisma:generate  # Generate Prisma Client after schema changes
+npm run prisma:migrate   # Create and apply new migration
+npm run prisma:reset     # Reset database (WARNING: deletes all data)
+npm run prisma:studio    # Open Prisma Studio GUI
 ```
 
-### Citation Tracking Table
-```sql
-CREATE TABLE citation_tracking (
-    citation_id UUID PRIMARY KEY,
-    content_id VARCHAR(50),
-    platform VARCHAR(30),
-    citation_url TEXT,
-    ai_indexed BOOLEAN,
-    citation_strength VARCHAR(10)
-);
+### Database Access
+```bash
+# PostgreSQL (primary data)
+PGPASSWORD=claude_dev_2025 psql -h localhost -p 5437 -U claude -d claude_dev
+
+# Neo4j (graph data - prompts, relationships)
+# Browser: http://localhost:7475
+# Credentials: neo4j / claude_neo4j_2025
+
+# Redis (cache/queues)
+redis-cli -h localhost -p 6382 -a claude_redis_2025
+
+# MongoDB (raw scraped content)
+mongosh mongodb://claude:claude_mongo_2025@localhost:27018/leapgeo7?authSource=admin
 ```
 
-## Priority System (P-Level)
+### Service Management
+```bash
+# Start all MCP services (databases, Firecrawl, MinIO, n8n)
+bash scripts/mcp-quick-start.sh
 
-The system uses a 4-tier priority model based on Enhanced GEO Score and Quick Win Index:
+# Stop all services
+bash scripts/mcp-stop.sh
 
+# Check Docker containers
+docker ps | grep -E "postgres|neo4j|redis|mongodb|minio|firecrawl"
+```
+
+## Architecture
+
+### Full-Stack Structure
+
+**Monorepo Layout:**
+```
+leapgeo7/
+├── src/                    # Frontend (React + TypeScript)
+│   ├── components/         # Reusable UI components
+│   ├── pages/              # Page-level components (20 pages)
+│   ├── services/           # API clients, business logic
+│   ├── store/              # Redux Toolkit state management
+│   ├── integrations/       # External API clients (Firecrawl, Neo4j)
+│   └── App.tsx             # Main routing configuration
+├── server/                 # Backend (NestJS)
+│   ├── src/
+│   │   ├── modules/        # Feature modules (8 modules)
+│   │   ├── prisma/         # Prisma ORM setup
+│   │   └── main.ts         # NestJS bootstrap
+│   └── prisma/schema.prisma
+├── e2e/                    # Playwright E2E tests
+└── scripts/                # Deployment and automation scripts
+```
+
+### Frontend Architecture
+
+**Technology:** React 18 + TypeScript + Material-UI + D3.js + Redux Toolkit
+
+**Page Structure (20 pages):**
+- **Planning**: Dashboard, RoadmapManager, PromptLandscape
+- **Content**: ContentRegistry, ContentGenerator, TemplateEditor
+- **Analysis**: CitationTracker, CitationStrength, KPIDashboard, ContentCoverage
+- **Visualization**: BattlefieldMap, GeoMappingNetwork, AnalyticsReports
+- **Automation**: WorkflowMonitor
+- **Admin**: SystemSettings, UserManagement, Help
+- **Conversion**: Offers, Orders
+
+**State Management:**
+- Redux Toolkit for global state (roadmap, content, citations)
+- React Query for server state synchronization
+- Zustand for lightweight local state
+
+**D3.js Visualizations:**
+- `components/charts/GraphVisualization.tsx` - Force-directed graph for Prompt Landscape
+- `components/charts/ThreeLayerNetworkGraph.tsx` - Canvas-based three-layer network (Prompts → Contents → Citations)
+- `components/charts/HeatMap.tsx` - Competition intensity heatmap
+
+### Backend Architecture
+
+**Technology:** NestJS 10 + Prisma + Neo4j + PostgreSQL
+
+**Module Structure:**
+```
+server/src/modules/
+├── roadmap/              # Roadmap CRUD, priority calculation
+├── content/              # Content registry, publication status
+├── citation/             # Citation tracking across 7 platforms
+├── analytics/            # KPI metrics, performance reports
+├── neo4j/                # Neo4j connection and basic queries
+├── neo4j-gds/            # Graph Data Science algorithms
+│   ├── services/
+│   │   ├── centrality.service.ts          # PageRank, Betweenness, Closeness
+│   │   ├── community-detection.service.ts # Louvain, Label Propagation
+│   │   └── similarity.service.ts          # Node Similarity, KNN
+│   └── controllers/
+│       └── neo4j-gds.controller.ts        # REST API endpoints
+└── prompt-landscape/     # Prompt knowledge graph analysis
+```
+
+**API Structure:**
+- Base URL: `http://localhost:3001/api/v1`
+- Swagger Docs: `http://localhost:3001/api/docs`
+- Key endpoints:
+  - `/roadmap` - Roadmap management
+  - `/content` - Content registry
+  - `/citations` - Citation tracking
+  - `/analytics` - KPI metrics
+  - `/prompt-landscape` - Graph data with gap analysis
+  - `/neo4j-gds` - Graph algorithms (PageRank, community detection, similarity)
+
+### Data Models
+
+**Priority System (P-Level):**
 - **P0 (Core)**: Total Score ≥ 100, 8 hours/content, AI citation prob >75%, ROI 2 months
 - **P1 (Important)**: 75-100 score, 6 hours/content, 50-75% citation prob, ROI 3 months
 - **P2 (Opportunity)**: 50-75 score, 5 hours/content, 25-50% citation prob, ROI 4-6 months
@@ -100,625 +168,456 @@ The system uses a 4-tier priority model based on Enhanced GEO Score and Quick Wi
 totalScore = (enhanced_geo_score * 0.7) + (quickwin_index * 0.3)
 ```
 
-## Development Commands
+**Database Schema:**
+- **PostgreSQL**: Roadmap, Content Registry, Citation Tracking, Analytics (Prisma schema in `server/prisma/schema.prisma`)
+- **Neo4j**: Prompts graph, Content relationships, Citation networks
+- **Redis**: Task queues, caching
+- **MongoDB**: Raw scraped content from Firecrawl (TTL: 90 days)
 
-### Database Operations
+### 7-Step Automated Workflow
+
+This system implements a complete GEO workflow:
+
+1. **Roadmap Ingestor** - Import monthly roadmap from CSV/TSV
+2. **Content Registry** - Manage content inventory and coverage
+3. **Prompt Landscape Builder** - Build P0-P3 priority hierarchy in Neo4j
+4. **Content Ingestor** - Process multi-format content
+5. **Content Generator** - Generate and distribute to multiple channels
+6. **Citation Tracker** - Monitor 7 AI platforms (Perplexity, ChatGPT, Google AI Overview, etc.)
+7. **Feedback Analyzer** - Analyze KPIs and optimize strategy
+
+## Neo4j Graph Data Science Integration
+
+**Purpose:** Advanced graph algorithms for content strategy optimization
+
+**Location:** `server/src/modules/neo4j-gds/`
+
+**Three Service Categories:**
+
+### 1. Community Detection (Prompt Clustering)
+- **Louvain Algorithm**: Hierarchical clustering, identifies 8+ semantic communities
+- **Label Propagation**: Fast clustering for real-time topic identification
+- **API**: `GET /api/v1/neo4j-gds/communities`
+- **Use Case**: Auto-categorize prompts into theme clusters
+
+### 2. Centrality Analysis (Influence Ranking)
+- **PageRank**: Identify most influential prompts
+- **Betweenness**: Find bridge prompts in user journeys
+- **Closeness**: Detect content hubs
+- **Comprehensive**: Combined score = PageRank×0.5 + Betweenness×0.3 + Closeness×0.2
+- **API**: `GET /api/v1/neo4j-gds/centrality/{pagerank|betweenness|closeness|comprehensive}`
+- **Use Case**: Prioritize content creation based on influence scores
+
+### 3. Similarity Analysis (Content Recommendation)
+- **Node Similarity**: Jaccard coefficient-based similarity
+- **K-Nearest Neighbors**: Attribute-based recommendations
+- **API**: `GET /api/v1/neo4j-gds/similarity/prompts/:id/{similar|knn}`
+- **Use Case**: "Related prompts" recommendations, gap analysis
+
+**Graph Projection Pattern:**
+```cypher
+CALL gds.graph.project(
+  'prompt-graph',
+  'Prompt',
+  { RELATES_TO: { orientation: 'UNDIRECTED', properties: 'weight' } },
+  { nodeProperties: ['score'] }  // Only numeric properties
+)
+```
+
+**Important Notes:**
+- Neo4j GDS requires numeric node properties only (String properties cause errors)
+- All parameters must be type-converted: `toInteger($limit)`, `toInteger($topK)`
+- Always clean up graph projections: `CALL gds.graph.drop($graphName)`
+- For detailed implementation, see `NEO4J-GDS-UPGRADE-PLAN.md`
+
+## MCP Integration
+
+This project leverages 23+ MCP (Model Context Protocol) servers for automation:
+
+**Key Integrations:**
+- **n8n** (port 5678): Workflow automation hub, 8 active workflows
+- **Firecrawl** (port 3002): Self-hosted web scraping (unlimited SERP monitoring)
+- **Neo4j** (port 7475): Graph database for prompt relationships
+- **MinIO** (port 9001): Object storage for content backups
+- **Feishu**: Team documentation and reports
+- **Slack**: Real-time alerts and notifications
+- **InfraNodus**: Text network analysis and gap detection
+- **GEO Knowledge Graph**: 15 specialized GEO tools
+
+**Automation Workflows:**
+1. Daily SERP monitoring and competitor tracking
+2. Weekly automated report generation (Feishu)
+3. Real-time citation tracking across 7 AI platforms
+4. Content gap analysis and recommendations
+5. Graph health monitoring and maintenance
+
+**Quick Start:**
 ```bash
-npx prisma migrate dev        # Run database migrations
-npx prisma db seed            # Seed test data
-npx prisma db reset           # Reset database
+bash scripts/mcp-quick-start.sh  # Start all services
 ```
 
-### Testing
+For complete MCP documentation, see `MCP-EMPOWERMENT-README.md` and `MCP-EMPOWERMENT-STRATEGY.md`.
+
+## CI/CD Pipeline
+
+**Automated Deployment Flow:**
+```
+Local Dev → Type Check → Build → Git Push → GitHub Actions → Vercel
+```
+
+**Deployment Commands:**
 ```bash
-npm test                      # Unit tests
-npm run test:e2e              # End-to-end tests
-npm run test:coverage         # Coverage report
+npm run deploy              # Auto-deploy with default message
+npm run deploy:msg "feat"   # Auto-deploy with custom message
 ```
 
-### Build & Deploy
+**What happens automatically:**
+1. TypeScript type checking (`npm run type-check`)
+2. Production build (`npm run build`)
+3. Git commit and push
+4. GitHub Actions CI runs tests
+5. Vercel auto-deploys to production
+
+**Monitoring:**
+- GitHub Actions: https://github.com/keevingfu/leapgeo7/actions
+- Vercel Dashboard: https://vercel.com/dashboard
+
+**Commit Convention:**
+Use Conventional Commits format:
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation updates
+- `refactor:` - Code refactoring
+- `test:` - Test additions
+- `chore:` - Build/tooling updates
+
+For detailed CI/CD guide, see `CICD-README.md`.
+
+## Testing
+
+**Unit Tests (Vitest):**
 ```bash
-npm run build                 # Production build
-npm run docker:build          # Build Docker image
-npm run docker:push           # Push to registry
+npm test                  # Run all tests
+npm run test:coverage     # Generate coverage report
 ```
 
-### Code Quality
+**E2E Tests (Playwright):**
 ```bash
-npm run lint                  # Code linting
-npm run format                # Code formatting
+npx playwright test                # Run all E2E tests
+npx playwright test --ui           # Run in UI mode
+npx playwright test navigation     # Run specific test file
+npx playwright show-report         # View HTML report
 ```
 
-## API Structure
+**Test Coverage:**
+- `e2e/navigation.spec.ts` - Page navigation and routing
+- `e2e/interactions.spec.ts` - User interactions, filters, data entry
 
-```
-/api/v1
-├── /roadmap
-│   ├── GET    /              # List roadmap items
-│   ├── POST   /              # Create roadmap item
-│   ├── PUT    /:id           # Update roadmap item
-│   └── POST   /import        # Bulk import from CSV/TSV
-│
-├── /content
-│   ├── GET    /              # List content
-│   ├── POST   /              # Create content
-│   ├── POST   /:id/publish   # Publish content
-│   └── GET    /coverage      # Coverage report
-│
-├── /citations
-│   ├── GET    /              # List citations
-│   ├── POST   /track         # Track new citation
-│   └── GET    /metrics       # Citation metrics
-│
-├── /analytics
-│   ├── GET    /dashboard     # Dashboard data
-│   ├── GET    /kpi           # KPI metrics
-│   └── GET    /reports       # Generate reports
-│
-├── /prompt-landscape         # ✅ NEW: Prompt Knowledge Graph API
-│   ├── GET    /              # Full graph data with filters (pLevels, month, minScore)
-│   ├── GET    /gaps          # Content gap analysis & recommendations
-│   ├── GET    /network/:id   # Related prompts network (depth configurable)
-│   └── GET    /stats         # Coverage statistics & P-level breakdown
-│
-└── /workflow
-    ├── POST   /trigger       # Trigger workflow
-    └── GET    /status        # Workflow status
-```
+**E2E Test Notes:**
+- Tests run against `http://localhost:5173`
+- Frontend dev server must be running before E2E tests
+- Tests use Material-UI selectors (`.MuiChip-root`, `.MuiButton-root`)
+- Current pass rate: 80% (8/10 tests passing)
 
-## Core Module Locations
+## Key Configuration Files
 
-### Backend Services
-- `services/PriorityCalculator.ts` - P-Level calculation engine
-- `services/ContentTemplateEngine.ts` - Template variable substitution
-- `services/CitationTracker.ts` - Multi-platform citation tracking
-- `workflow/GeoWorkflowEngine.ts` - 7-step workflow orchestration
-- `modules/prompt-landscape/prompt-landscape.service.ts` - ✅ Prompt graph data & gap analysis (350+ lines)
+| File | Purpose |
+|------|---------|
+| `package.json` | Frontend dependencies and scripts |
+| `server/package.json` | Backend dependencies and scripts |
+| `tsconfig.json` | TypeScript configuration (frontend) |
+| `server/tsconfig.json` | TypeScript configuration (backend) |
+| `vite.config.ts` | Vite build configuration |
+| `playwright.config.ts` | E2E test configuration |
+| `server/prisma/schema.prisma` | Database schema |
+| `server/.env` | Backend environment variables |
+| `.env.mcp` | MCP service credentials (not in git) |
 
-### Frontend Components
-- `components/charts/BattlefieldMap.tsx` - D3.js force-directed graph
-- `components/dashboard/KPIDashboard.tsx` - KPI metric cards
-- `components/charts/HeatMap.tsx` - Competition intensity visualization
-- `components/charts/GraphVisualization.tsx` - ✅ D3.js force-directed knowledge graph (200+ lines)
-- `pages/PromptLandscape/index.tsx` - ✅ Dual-tab interface (Scatter Plot + Knowledge Graph)
+## Common Development Workflows
 
-### Integration Adapters
-- `integrations/FirecrawlService.ts` - Web scraping for citation discovery
-- `integrations/Neo4jService.ts` - Graph database operations for prompt networks
-- `modules/prompt-landscape/prompt-landscape.controller.ts` - ✅ REST API endpoints (4 endpoints)
+### Adding a New Page
+1. Create component in `src/pages/NewPage/index.tsx`
+2. Add route in `src/App.tsx`
+3. Add menu item in `src/components/layout/Sidebar.tsx`
+4. Add E2E test in `e2e/navigation.spec.ts`
 
-## Data Flow
+### Adding a New Backend Module
+1. Create module directory: `server/src/modules/new-module/`
+2. Create module file: `new-module.module.ts`
+3. Create controller: `new-module.controller.ts`
+4. Create service: `new-module.service.ts`
+5. Register in `server/src/app.module.ts`
 
-**Input Sources:**
-- `roadmap_cn.tsv` → Normalized → `roadmap_en.csv` → Priority Calculator → Monthly Backlog
-- `content_inventory_cn.tsv` → Field Mapping → `content_registry_en.csv` → Coverage Analyzer
-- `citation_sources.csv` → Citation Tracker → Performance Metrics
-
-**Processing Pipeline:**
-```
-CSV Import → Data Normalization (field_mapping.json)
-  → Priority Calculation → Content Generation
-  → Multi-channel Publishing → Citation Tracking
-  → KPI Analysis → Feedback Loop
-```
-
-## Critical Configuration Files
-
-- `field_mapping.json` - CSV field to database column mappings
-- `prioritization_rules.json` - P-Level scoring weights
-- `templates_content_templates.md` - 7 content type templates (YouTube, Reddit, Quora, Medium, Blog, Amazon, LinkedIn)
-- `templates_report_templates.md` - Report generation templates
-
-## Performance Optimization
-
-### Database Indexes
-```sql
-CREATE INDEX idx_roadmap_composite ON roadmap(p_level, month, enhanced_geo_score DESC);
-CREATE INDEX idx_content_search ON content_registry USING gin(to_tsvector('english', title));
-```
-
-### Caching Strategy
-- **L1**: Memory cache (in-app)
-- **L2**: Redis cache (3600s TTL)
-- **L3**: Database
-
-### Query Optimization
-- Use Prisma query builder with `include` for eager loading
-- Parallelize count queries with Promise.all
-- Implement cursor-based pagination for large datasets
-
-## Security
-
-### Authentication
-- JWT tokens (15min access, 7day refresh)
-- RBAC with roles: admin, editor, analyst, viewer
-
-### Data Protection
-- AES-256-GCM encryption for sensitive data
-- SQL injection prevention via Prisma ORM
-- XSS protection with DOMPurify
-
-## Monitoring
-
-### Metrics Exposed
-- `http_request_duration_seconds` - Request latency
-- `http_requests_total` - Total requests
-- `active_connections` - Active DB connections
-
-### Logging
-- Winston logger with JSON format
-- Separate error.log and combined.log
-- Request logging middleware tracks method, URL, status, duration
-
-## Docker Deployment
-
+### Running Full Development Stack
 ```bash
-# Start all services
-docker-compose up -d
+# Terminal 1: Start MCP services
+bash scripts/mcp-quick-start.sh
 
-# Services:
-# - app: Main application (port 3000)
-# - postgres: PostgreSQL 15 (port 5432)
-# - redis: Redis 7.2 (port 6379)
-# - neo4j: Neo4j 5.15 (ports 7474/7687)
-# - nginx: Reverse proxy (ports 80/443)
-```
+# Terminal 2: Start backend
+cd server && npm run dev
 
-## Environment Setup
-
-```bash
-# 1. Clone and install
-git clone <repo-url>
-npm install
-
-# 2. Configure environment
-cp .env.example .env
-# Edit DATABASE_URL, REDIS_URL, NEO4J_URI, API keys
-
-# 3. Initialize database
-npx prisma migrate dev
-npx prisma db seed
-
-# 4. Start development server
+# Terminal 3: Start frontend
 npm run dev
+
+# Access:
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:3001/api/v1
+# Swagger Docs: http://localhost:3001/api/docs
 ```
 
-## Testing Strategy
+### Database Migrations
+```bash
+cd server
 
-### Unit Tests
-- Priority calculation logic
-- Template variable substitution
-- Citation strength scoring
+# Create migration after schema change
+npm run prisma:migrate
 
-### Integration Tests
-- Full 7-step workflow execution
-- API endpoint responses
-- Database transaction handling
+# View/edit data
+npm run prisma:studio
 
-### E2E Tests (Playwright)
-- Dashboard KPI display
-- Roadmap navigation
-- Content creation flow
-
-## Neo4j Graph Queries
-
-### Find Content Gaps
-```cypher
-MATCH (p:Prompt)
-WHERE NOT (p)-[:COVERED_BY]->(:Content)
-AND p.p_level IN ['P0', 'P1']
-RETURN p.text, p.p_level, p.score
-ORDER BY p.score DESC
-LIMIT 20
+# Reset database (development only)
+npm run prisma:reset
 ```
 
-### Prompt Relationship Network
-```cypher
-CREATE (p:Prompt {id, text, p_level, score})
-CREATE (c:Content {id, title, channel})
-CREATE (p)-[:COVERED_BY]->(c)
-CREATE (p)-[:RELATES_TO {weight: 0.8}]->(p2)
+## Important Notes
+
+### Date Convention
+All mock data uses dates starting from **2025-09** (September 2025):
+- 2025-09 (September) for Q3 data
+- 2025-10 (October) for Q4 data
+- 2025-11 (November) for future planning
+- 2025-12 (December) for year-end projections
+
+### Environment Requirements
+- Node.js ≥ 20.0.0
+- npm ≥ 10.0.0
+- Docker Desktop (for databases)
+- 4 Docker containers must be running:
+  - postgres-claude-mcp (port 5437)
+  - neo4j-claude-mcp (ports 7688, 7475)
+  - redis-claude-mcp (port 6382)
+  - mongodb-claude-mcp (port 27018)
+
+### Neo4j Cypher Query Best Practices
+- Always use `toInteger()` for LIMIT clauses
+- Only include numeric properties in graph projections
+- Clean up graph projections after algorithm execution
+- Use parameterized queries to prevent injection
+- Add indexes for frequently queried properties
+
+### Material-UI Component Usage
+- Use `sx` prop for styling (not `style`)
+- Prefer MUI components over raw HTML
+- Use `@mui/icons-material` for icons
+- Follow design system colors and spacing
+
+## Troubleshooting
+
+### Frontend Build Fails
+```bash
+npm run type-check  # Check for TypeScript errors
+rm -rf node_modules && npm install  # Reinstall dependencies
 ```
 
-## Common Development Tasks
-
-### Add New Content Template
-1. Define template in `templates_content_templates.md`
-2. Add template ID to `ContentTemplateEngine.ts`
-3. Update frontend template selector
-4. Test variable substitution
-
-### Add New Platform for Citation Tracking
-1. Implement platform tracker in `services/CitationTracker.ts`
-2. Add platform to `platforms` array
-3. Configure API credentials in `.env`
-4. Update dashboard platform filter
-
-### Modify Priority Calculation
-1. Update weights in `services/PriorityCalculator.ts`
-2. Update `prioritization_rules.json`
-3. Re-calculate existing roadmap scores
-4. Verify P-Level distribution in tests
-
-## Architecture Patterns
-
-### Repository Pattern
-```typescript
-class RoadmapRepository {
-  async findPrioritizedItems(filters: RoadmapFilters): Promise<PaginatedResult> {
-    // Prisma query with includes, filters, pagination
-  }
-}
+### Backend Won't Start
+```bash
+cd server
+rm -rf node_modules && npm install
+npm run prisma:generate  # Regenerate Prisma Client
 ```
 
-### Circuit Breaker for External APIs
-```typescript
-const result = await circuitBreaker.execute(
-  () => firecrawlApi.crawl(url),
-  () => cachedFallback() // Fallback on failure
-);
+### Database Connection Issues
+```bash
+# Check Docker containers
+docker ps | grep -E "postgres|neo4j|redis|mongodb"
+
+# Restart containers
+docker restart postgres-claude-mcp neo4j-claude-mcp redis-claude-mcp mongodb-claude-mcp
 ```
 
-### Bull Queue for Async Jobs
-```typescript
-await queue.add('step-1-roadmap-ingest', { month, file });
-queue.process('step-1-roadmap-ingest', async (job) => {
-  // Process workflow step
-});
+### E2E Tests Failing
+```bash
+# Make sure dev server is running
+npm run dev
+
+# Run tests in UI mode to debug
+npx playwright test --ui
 ```
 
-## Project Structure
+## Documentation References
 
-```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── dashboard/          # Dashboard views
-│   ├── roadmap/            # Roadmap management
-│   ├── content/            # Content creation
-│   └── api/v1/             # API routes
-├── components/             # React components
-│   ├── charts/             # D3.js visualizations
-│   ├── tables/             # Data tables
-│   └── forms/              # Form components
-├── services/               # Business logic services
-├── integrations/           # External API adapters
-├── workflow/               # Workflow engine
-└── repositories/           # Data access layer
-```
-
-## Reference Documentation
-
-- **Requirements**: See `sweetnight-geo-requirements.md` for full PRD
-- **Architecture**: See `sweetnight-geo-architecture.md` for system design diagrams
-- **Development**: See `sweetnight-geo-dev-doc.md` for detailed API specs and implementation guides
-- **InfraNodus Integration**: See `sweetnight-geo-infranodus-system.md` for text analysis workflows
+| Document | Description |
+|----------|-------------|
+| `README.md` | Project overview and quick start |
+| `CICD-README.md` | CI/CD deployment guide |
+| `MCP-EMPOWERMENT-README.md` | MCP integration quick start |
+| `MCP-EMPOWERMENT-STRATEGY.md` | Complete MCP automation strategy (40+ pages) |
+| `NEO4J-GDS-UPGRADE-PLAN.md` | Neo4j Graph Data Science implementation details |
+| `sweetnight-geo-requirements.md` | Product requirements document |
+| `sweetnight-geo-architecture.md` | System architecture diagrams |
+| `sweetnight-geo-dev-doc.md` | Detailed API specifications |
+| `/Users/cavin/CLAUDE.md` | Global Claude Code configuration (24 MCP servers) |
 
 ---
 
-## Latest Development Updates
+## Latest Development Status
 
-### 🎉 2025-10-22: Prompt Landscape Knowledge Graph System
+### 🎉 2025-10-30: System Recovery & Process A Implementation
 
-**Status**: ✅ Completed and Deployed
+**Status**: ✅ Completed and Operational
 
-**Implemented Features**:
+**Completed Tasks**:
 
-#### 1. Backend API (NestJS + Neo4j)
-**Location**: `server/src/modules/prompt-landscape/`
+#### 1. System Recovery from Connection Errors
+- ✅ Fixed frontend server connection refused error (port 5174)
+- ✅ Resolved TypeScript enum compilation errors in `data-acquisition.service.ts`
+- ✅ Installed missing dependencies (@nestjs/bull, socket.io, @nestjs/websockets)
+- ✅ Created PostgreSQL database `claude_dev` and ran migrations
+- ✅ Successfully started both frontend (5174) and backend (3001) servers
 
-- ✅ **PromptLandscapeModule** (完整NestJS模块)
-- ✅ **PromptLandscapeService** (350+ lines)
-  - `getPromptLandscape()` - 获取完整图数据，支持P-level/月份/分数过滤
-  - `analyzeContentGaps()` - 识别未覆盖P0/P1 prompts和结构化漏洞
-  - `getPromptNetwork()` - 获取特定prompt的关系网络（可配置深度）
-  - `generateRecommendations()` - AI驱动的内容创建优先级建议
+#### 2. Process A: Data Acquisition Hub Implementation
+**Location**: `server/src/modules/data-acquisition/`
 
-- ✅ **PromptLandscapeController** (4个REST API端点)
-  - `GET /api/v1/prompt-landscape` - 完整图数据（节点+边+统计）
-  - `GET /api/v1/prompt-landscape/gaps` - 内容缺口分析
-  - `GET /api/v1/prompt-landscape/network/:promptId` - 关系网络
-  - `GET /api/v1/prompt-landscape/stats` - 覆盖率统计
+**Implemented Components**:
+- ✅ **DataAcquisitionModule** - Complete NestJS module
+- ✅ **DataAcquisitionService** - MCP integration service (384 lines)
+- ✅ **DataAcquisitionController** - REST API endpoints
+- ✅ **DataAcquisitionGateway** - WebSocket real-time updates
+- ✅ **DTO definitions** - Type-safe data transfer objects
 
-**API测试结果**:
-```json
-{
-  "totalPrompts": 4,
-  "coveredPrompts": 1,
-  "uncoveredPrompts": 3,
-  "coverageRate": 25,
-  "totalRelationships": 0
-}
+**API Endpoints** (Base: `/api/v1/data-acquisition`):
+```
+GET    /sources              # List all data sources
+POST   /sources              # Create new data source
+POST   /scrape/start         # Start scraping job
+POST   /scrape/stop/:id      # Stop scraping
+POST   /scrape/pause/:id     # Pause scraping
+POST   /scrape/resume/:id    # Resume scraping
+GET    /mcp-stats           # MCP usage statistics
+GET    /logs                # Scraping activity logs
 ```
 
-#### 2. 前端可视化组件 (React + D3.js)
-
-- ✅ **GraphVisualization Component** (200+ lines)
-  - **文件**: `src/components/charts/GraphVisualization.tsx`
-  - **技术**: D3.js force-directed layout
-  - **功能**:
-    - 📊 力导向图自动布局
-    - 🎨 节点大小按GEO分数编码
-    - 🌈 节点颜色按P-level编码（P0红、P1橙、P2绿、P3蓝）
-    - 💫 透明度表示覆盖状态（已覆盖0.8，未覆盖0.4）
-    - 🔴🟢 边框颜色（绿色=已覆盖，红色=未覆盖）
-    - 📝 悬停显示详细tooltip
-    - 🖱️ 拖拽节点重新定位
-    - 🔍 缩放和平移
-    - 📌 点击查看节点详情
-    - 🔢 内容计数徽章
-
-- ✅ **PromptLandscape Page 更新**
-  - **文件**: `src/pages/PromptLandscape/index.tsx`
-  - **新增**:
-    - 🔀 双标签界面（Scatter Plot + Knowledge Graph）
-    - 📊 统计卡片（总数/覆盖/未覆盖/覆盖率）
-    - 🎛️ P-level过滤Chips（P0/P1/P2/P3）
-    - 🕳️ Content Gaps面板（AI推荐）
-    - 🔍 节点详情Dialog
-
-#### 3. E2E测试修复
-
-- ✅ **P-level过滤测试** - 修复选择器从 `button:has-text()` 到 `.MuiChip-root:has-text()`
-- ✅ **测试通过率**: 8/10 (80%)
-  - ✅ P-level过滤
-  - ✅ 月份过滤
-  - ✅ 平台过滤
-  - ✅ 时间范围切换
-  - ✅ 预览模式
-  - ✅ 用户管理
-  - ✅ 角色权限
-  - ✅ 设置标签
-  - ⚠️ 频道标签（功能正常，测试选择器待优化）
-  - ⚠️ 报告生成（功能正常，测试选择器待优化）
-
-#### 4. 技术问题解决
-
-- ✅ 修复TypeScript编译错误（重复属性名）
-- ✅ 修复路由重复问题（移除controller装饰器前缀）
-- ✅ 更新数据库连接配置（使用postgres-claude-mcp:5437）
-- ✅ 修复类型不匹配（Neo4j stats属性映射）
-
-#### 5. 部署状态
-
-**运行服务**:
-- ✅ 前端: http://localhost:5173
-- ✅ 后端: http://localhost:3001
-- ✅ Neo4j: bolt://localhost:7688
-- ✅ PostgreSQL: localhost:5437
-
-**访问地址**:
-- 📊 Prompt Landscape: http://localhost:5173/prompt-landscape
-- 📚 API文档: http://localhost:3001/api/docs
-
-**文件变更**:
+**MCP Integration Pipeline**:
 ```
-创建文件:
-+ server/src/modules/prompt-landscape/prompt-landscape.module.ts
-+ server/src/modules/prompt-landscape/prompt-landscape.service.ts (350+ lines)
-+ server/src/modules/prompt-landscape/prompt-landscape.controller.ts (130+ lines)
-+ src/components/charts/GraphVisualization.tsx (200+ lines)
-
-修改文件:
-* server/src/app.module.ts (添加PromptLandscapeModule)
-* server/.env (更新数据库配置)
-* src/pages/PromptLandscape/index.tsx (添加Knowledge Graph标签)
-* e2e/interactions.spec.ts (修复P-level选择器)
+Firecrawl (Scraping) → InfraNodus (Analysis) → MongoDB (Storage) → Neo4j (Graph)
 ```
 
-**下一步建议**:
-- [ ] 优化剩余2个E2E测试选择器
-- [ ] 添加更多Neo4j测试数据
-- [ ] 实现prompt关系边的创建功能
-- [ ] 添加图导出功能（PNG/SVG）
-- [ ] 集成InfraNodus文本分析到gap recommendations
+**WebSocket Events**:
+- `scraping-progress` - Real-time progress updates
+- `data-source-created` - New source notifications
+- `data-source-updated` - Status changes
+
+#### 3. Current Running Services
+```
+Frontend (Vite + React):    ✅ Port 5174
+Backend (NestJS):          ✅ Port 3001
+PostgreSQL:                ✅ Port 5437
+Neo4j:                     ✅ Port 7688 (Bolt), 7475 (HTTP)
+Redis (Bull Queue):        ✅ Port 6382
+WebSocket:                 ✅ Initialized
+```
+
+### Next Development Phase
+
+#### Phase 1: Complete Process B-H (Priority: High)
+
+**Process B: ETL Pipeline Viewer**
+- [ ] Implement ETL monitoring dashboard
+- [ ] Create data transformation pipeline visualization
+- [ ] Add error handling and retry logic
+- [ ] Integrate with Bull queue monitoring
+
+**Process C: AIGC Studio**
+- [ ] Build content generation interface
+- [ ] Integrate Claude/GPT APIs for content creation
+- [ ] Implement template management system
+- [ ] Add batch generation capabilities
+
+**Process D: Content Scoring Center**
+- [ ] Implement E-E-A-T scoring algorithms
+- [ ] Create scoring dashboard with metrics
+- [ ] Add historical tracking and trends
+- [ ] Integrate with content recommendations
+
+**Process E: Multi-Channel Publisher**
+- [ ] Build publishing workflow interface
+- [ ] Integrate with Feishu, Notion, Slack
+- [ ] Implement scheduling and automation
+- [ ] Add publication status tracking
+
+**Process F: Citation Monitor**
+- [ ] Real-time citation tracking across 7 platforms
+- [ ] Implement alert system for new citations
+- [ ] Build citation strength analysis
+- [ ] Create competitive comparison dashboard
+
+**Process G: Analytics Dashboard**
+- [ ] Aggregate metrics from all processes
+- [ ] Build executive dashboard with KPIs
+- [ ] Implement custom report generation
+- [ ] Add data export capabilities
+
+**Process H: GEO Mapping Network**
+- [ ] Enhance three-layer visualization
+- [ ] Add real-time data binding from Neo4j
+- [ ] Implement interactive filtering
+- [ ] Build export functionality
+
+#### Phase 2: Integration & Optimization (Priority: Medium)
+
+**MCP Workflow Automation**:
+- [ ] Configure n8n workflows for all 8 processes
+- [ ] Set up daily SERP monitoring workflow
+- [ ] Implement weekly report generation
+- [ ] Create content gap analysis automation
+
+**Performance Optimization**:
+- [ ] Implement Redis caching layer
+- [ ] Optimize Neo4j queries with indexes
+- [ ] Add pagination to all list endpoints
+- [ ] Implement lazy loading for visualizations
+
+#### Phase 3: Testing & Documentation (Priority: Medium)
+
+**Testing Coverage**:
+- [ ] Add unit tests for all services (target: 80%)
+- [ ] Create E2E tests for critical workflows
+- [ ] Implement integration tests for MCP pipelines
+- [ ] Add performance benchmarking
+
+**Documentation**:
+- [ ] Create API documentation with examples
+- [ ] Write user guide for each process
+- [ ] Document MCP integration patterns
+- [ ] Create troubleshooting guide
+
+### Technical Debt & Issues
+
+**Known Issues**:
+- E2E tests: 2 tests failing (channel tags, report generation)
+- API route duplication in DataAcquisitionController (`/api/v1/api/v1/`)
+- Multiple background npm dev processes running (needs cleanup)
+
+**Technical Debt**:
+- Refactor mock data to use actual database queries
+- Implement proper error boundaries in React components
+- Add request validation middleware
+- Standardize API response format
+
+### Development Metrics
+
+| Metric | Value | Target |
+|--------|-------|---------|
+| Frontend Pages Completed | 20/20 | 100% ✅ |
+| Backend Modules | 8/8 | 100% ✅ |
+| Process Implementation | 1/8 | 100% 🔄 |
+| E2E Test Coverage | 80% | 95% |
+| API Endpoints | 45+ | 60+ |
+| MCP Integrations | 5/23 | 23 |
 
 ---
 
-### 🎉 2025-10-24: Content Mapping & System Enhancements
-
-**Status**: ✅ Completed and Deployed
-
-**完成的功能**:
-
-#### 1. Content Mapping 页面集成
-**位置**: `src/pages/ContentMapping/index.tsx`
-
-- ✅ **三层可视化图表系统**
-  - Prompts Layer (圆形节点，按P-level颜色编码)
-  - Contents Layer (矩形节点，按内容类型颜色编码)
-  - Citations Layer (三角形节点，按平台颜色编码)
-
-- ✅ **交互功能**
-  - 按Prompt筛选功能
-  - 显示/隐藏边缘切换
-  - 缩放控制 (0.5x - 2x)
-  - 节点点击查看详情
-  - 选中节点时显示统计信息
-
-- ✅ **Material-UI 风格**
-  - 完全从 Tailwind CSS 转换为 Material-UI
-  - 使用 MUI 组件: Box, Paper, Select, Button, Slider, Card, Chip
-  - 所有文本已从中文翻译为英文
-
-- ✅ **导航集成**
-  - 菜单名: "Content Mapping" (符合2词限制)
-  - 位置: Awareness 分组
-  - 图标: Hub icon (蓝色主题)
-  - 路由: `/content-mapping`
-
-**访问地址**: http://localhost:5173/content-mapping
-
-#### 2. React Router Future Flags 升级
-**位置**: `src/main.tsx`
-
-- ✅ **v7 兼容性准备**
-  ```typescript
-  <BrowserRouter
-    future={{
-      v7_startTransition: true,       // React.startTransition 包装
-      v7_relativeSplatPath: true,     // Splat 路由相对路径
-    }}
-  >
-  ```
-- ✅ 消除控制台警告
-- ✅ 提升路由性能
-
-#### 3. 数据日期统一更新
-**范围**: 14个页面组件，158处日期引用
-
-- ✅ **日期映射方案**
-  - 2025-01 (一月) → 2025-09 (九月)
-  - 2025-02 (二月) → 2025-10 (十月)
-  - 2025-03 (三月) → 2025-11 (十一月)
-  - 2025-04 (四月) → 2025-12 (十二月)
-
-- ✅ **处理的日期格式**
-  - `month: '2025-01'` → `month: '2025-09'`
-  - `date: '2025-01-15'` → `date: '2025-09-15'`
-  - `new Date('2025-01-10')` → `new Date('2025-09-10')`
-  - `` `2025-01-05T08:00:00` `` → `` `2025-09-05T08:00:00` ``
-
-**验证结果**: 0个旧日期残留，158处新日期已更新
-
-#### 4. TypeScript 类型修复
-
-- ✅ 修复 ContentMapping 组件类型错误
-  - Node 接口 `name` 属性改为可选
-  - Citations 节点添加 `name` 属性
-  - 文本渲染添加安全检查
-
-- ✅ 清理未使用导入
-  - Dashboard: 移除 Alert 和 InfoIcon
-
-**文件变更**:
-```
-创建文件:
-+ src/pages/ContentMapping/index.tsx (400+ lines)
-
-修改文件:
-* src/components/layout/Sidebar.tsx (添加 Content Mapping 导航)
-* src/App.tsx (添加 /content-mapping 路由)
-* src/main.tsx (添加 React Router future flags)
-* src/pages/Dashboard/index.tsx (清理未使用导入)
-* 14个页面组件 (批量日期更新)
-```
-
-**技术亮点**:
-- SVG 图表渲染优化
-- 力导向布局算法实现
-- Material-UI sx 属性高级应用
-- 批量文件处理自动化 (sed 命令)
-
-**下一步任务**:
-- [ ] 优化 ContentMapping 图表性能 (虚拟化大数据集)
-- [ ] 添加图表导出功能 (PNG/SVG)
-- [ ] 实现节点拖拽保存位置
-- [ ] 集成 Neo4j 后端数据源
-- [ ] 添加更多筛选选项 (按内容类型、平台等)
-
----
-
-### 🎉 2025-10-24 (晚间): GEO Content Mapping Network - Three-Layer Visualization System
-
-**Status**: ✅ Completed and Deployed
-
-**完成的功能**:
-
-#### 1. 核心可视化系统
-**文件**: `src/pages/GeoMappingNetwork/index.tsx` (600+ lines)
-
-**三层网络架构**:
-- ✅ **Prompts Layer** - 20个SweetNight床垫相关prompt节点
-  - P0-P3优先级颜色编码 (红/橙/黄/蓝)
-  - 圆形节点，按GEO分数大小调整
-  - 覆盖状态边框 (绿=已覆盖，红=未覆盖)
-
-- ✅ **Contents Layer** - 8种内容类型
-  - 矩形节点（橙色）
-  - YouTube Reviews, Comparison Articles, Amazon A+ Content, FAQ等
-
-- ✅ **Citations Layer** - 7个引用平台
-  - 三角形节点（绿色）
-  - Professional Reviews, YouTube Channels, Amazon Platform, Reddit等
-
-**核心价值体现**:
-1. **战略可视化价值** - P0-P3优先级层级，资源分配一目了然
-2. **内容覆盖缺口分析** - 85%覆盖率展示，结构化漏洞识别
-3. **多渠道引用追踪** - 7平台引用路径，28个活跃连接
-4. **竞品对比决策** - -10%竞品差距指标
-5. **数据驱动执行** - 实时筛选，动态KPI统计
-
-#### 2. Canvas图表组件
-**文件**: `src/components/charts/ThreeLayerNetworkGraph.tsx` (300+ lines)
-
-**技术实现**:
-- ✅ Canvas 2D API高性能渲染
-- ✅ 三层固定布局 (15%, 50%, 85% width)
-- ✅ 节点形状编码: 圆形/矩形/三角形
-- ✅ 颜色系统: P0=#EF4444, P1=#F97316, P2=#EAB308, P3=#3B82F6
-- ✅ 透明连接线 (alpha 0.4)
-- ✅ 交互式节点点击选择
-- ✅ 图例和图层标签
-
-#### 3. 交互功能
-- ✅ **动态筛选系统**
-  - Priority Filter (All Levels / P0 / P1 / P2 / P3)
-  - Category Filter (All Categories / Problem Solution / Tutorial / Comparison等)
-  - Coverage Status (All Status / Covered / Not Covered)
-
-- ✅ **节点详情面板**
-  - 点击节点显示完整信息
-  - Prompt: GEO分数、优先级、类别、搜索量、目标受众
-  - Content: 类型、数量
-  - Citation: 平台、数量
-
-- ✅ **KPI统计卡片** (4个)
-  - Visible Prompts: 20/20
-  - Active Connections: 28
-  - Content Coverage: 85%
-  - Competitor Gap: -10%
-
-#### 4. 系统集成与清理
-- ✅ **路由配置**: `/geo-mapping-network`
-- ✅ **菜单项**: 位于 Awareness 分组
-- ✅ **菜单名称**: "Content Mapping" (简洁2词)
-- ✅ **图标**: DeviceHub (紫色 #8B5CF6)
-- ✅ **删除旧页面**: 移除原Content Mapping页面及相关代码
-
-**文件变更**:
-```
-创建文件:
-+ src/pages/GeoMappingNetwork/index.tsx (600+ lines)
-+ src/components/charts/ThreeLayerNetworkGraph.tsx (300+ lines)
-
-修改文件:
-* src/App.tsx (添加GeoMappingNetwork路由，删除ContentMapping)
-* src/components/layout/Sidebar.tsx (更新菜单项，清理未使用导入)
-
-删除文件:
-- src/pages/ContentMapping/index.tsx
-- src/pages/ContentMapping/ (目录)
-```
-
-**Mock数据集**:
-- 20个真实SweetNight prompt (best mattress for back pain, SweetNight vs Casper等)
-- 8种内容类型 (YouTube Reviews, Comparison Articles, Amazon A+等)
-- 7个引用平台 (Professional Reviews, YouTube Channels, Amazon等)
-- 61个连接关系
-
-**设计规范**:
-- 深色背景 (#0f1729)
-- 绿色强调色 (#6ee7b7)
-- 全英文界面
-- 专业数据可视化风格
-
-**访问地址**: http://localhost:5173/geo-mapping-network
-
-**下一步建议**:
-- [ ] 集成Neo4j后端真实数据源
-- [ ] 添加节点拖拽功能
-- [ ] 实现图表导出 (PNG/SVG)
-- [ ] 添加时间轴筛选
-- [ ] 实现连接线强度动态调整
-- [ ] 添加prompt关系边的可视化
-- [ ] 集成InfraNodus文本分析
+**Last Updated**: 2025-10-30
+**Project Version**: 1.0.1
+**Architecture**: Full-stack TypeScript (React + NestJS)
+**Current Sprint**: Process Implementation (A-H)

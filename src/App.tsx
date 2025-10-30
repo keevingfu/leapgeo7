@@ -11,6 +11,23 @@ import AppLayout from '@/components/layout/AppLayout';
 // Pages
 import Login from '@/pages/Login';
 import Dashboard from '@/pages/Dashboard';
+
+// Data Pipeline Pages (NEW)
+import DataAcquisitionHub from '@/pages/DataAcquisitionHub';
+import ETLPipelineViewer from '@/pages/ETLPipelineViewer';
+
+// AI Generation Pages (NEW)
+import AIGCStudio from '@/pages/AIGCStudio';
+import ContentScoringCenter from '@/pages/ContentScoringCenter';
+
+// Publishing Pages (NEW)
+import MultiChannelPublisher from '@/pages/MultiChannelPublisher';
+import CitationMonitor from '@/pages/CitationMonitor';
+
+// Analytics Pages (NEW)
+import AnalyticsDashboard from '@/pages/AnalyticsDashboard';
+
+// Existing Pages
 import RoadmapManager from '@/pages/RoadmapManager';
 import ContentRegistry from '@/pages/ContentRegistry';
 import PromptLandscape from '@/pages/PromptLandscape';
@@ -50,8 +67,25 @@ function App() {
             {/* Default route redirects to dashboard */}
             <Route index element={<Navigate to="/dashboard" replace />} />
 
-            {/* 15 Core Pages */}
+            {/* Dashboard */}
             <Route path="dashboard" element={<Dashboard />} />
+
+            {/* Data Pipeline Pages (NEW) */}
+            <Route path="data-acquisition" element={<DataAcquisitionHub />} />
+            <Route path="etl-pipeline" element={<ETLPipelineViewer />} />
+
+            {/* AI Generation Pages (NEW) */}
+            <Route path="aigc-studio" element={<AIGCStudio />} />
+            <Route path="content-scoring" element={<ContentScoringCenter />} />
+
+            {/* Publishing Pages (NEW) */}
+            <Route path="multi-channel-publisher" element={<MultiChannelPublisher />} />
+            <Route path="citation-monitor" element={<CitationMonitor />} />
+
+            {/* Analytics Pages (NEW) */}
+            <Route path="analytics-dashboard" element={<AnalyticsDashboard />} />
+
+            {/* Existing Pages */}
             <Route path="roadmap" element={<RoadmapManager />} />
             <Route path="content" element={<ContentRegistry />} />
             <Route path="prompts" element={<PromptLandscape />} />
