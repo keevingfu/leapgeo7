@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Card,
@@ -15,38 +15,24 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Divider,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
   Avatar,
-  AvatarGroup,
-  CircularProgress,
 } from '@mui/material';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
   Speed as SpeedIcon,
-  People as PeopleIcon,
   Article as ArticleIcon,
-  Psychology as PsychologyIcon,
-  Hub as HubIcon,
-  Analytics as AnalyticsIcon,
-  AutoGraph as AutoGraphIcon,
-  DataThresholding as DataThresholdingIcon,
   Insights as InsightsIcon,
   Download as DownloadIcon,
   Refresh as RefreshIcon,
-  CalendarMonth as CalendarIcon,
 } from '@mui/icons-material';
 import {
-  LineChart,
-  Line,
   AreaChart,
   Area,
-  BarChart,
-  Bar,
   PieChart,
   Pie,
   Cell,

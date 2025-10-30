@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Card,
@@ -76,7 +76,7 @@ interface MCPMonitor {
 const CitationMonitor = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedPlatform, setSelectedPlatform] = useState('all');
-  const [citations, setCitations] = useState<Citation[]>([
+  const [citations] = useState<Citation[]>([
     {
       id: 'cit-001',
       contentId: 'cnt-001',
@@ -214,7 +214,7 @@ const CitationMonitor = () => {
     },
   ]);
 
-  const [mcpMonitor, setMcpMonitor] = useState<MCPMonitor[]>([
+  const [mcpMonitor] = useState<MCPMonitor[]>([
     {
       tool: 'Firecrawl (Citation Scraping)',
       callsToday: 342,

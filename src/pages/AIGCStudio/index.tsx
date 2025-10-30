@@ -7,19 +7,10 @@ import {
   Card,
   CardContent,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   TextField,
   LinearProgress,
   Chip,
-  Alert,
-  Tab,
-  Tabs,
   IconButton,
-  Tooltip,
-  Divider,
   List,
   ListItem,
   ListItemText,
@@ -28,7 +19,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Stack,
 } from '@mui/material';
 import {
   SmartToyOutlined as AIIcon,
@@ -48,8 +38,6 @@ import {
   CheckCircleOutline as CheckIcon,
   ErrorOutline as ErrorIcon,
   PlayCircleOutline as PlayIcon,
-  StopCircle as StopIcon,
-  RestartAlt as ResetIcon,
   ContentCopy as CopyIcon,
   Download as DownloadIcon,
 } from '@mui/icons-material';
@@ -93,9 +81,7 @@ export default function AIGCStudio() {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('blog');
   const [prompt, setPrompt] = useState<string>('');
   const [tasks, setTasks] = useState<GenerationTask[]>([]);
-  const [activeTab, setActiveTab] = useState(0);
   const [selectedTask, setSelectedTask] = useState<GenerationTask | null>(null);
-  const [showEvidence, setShowEvidence] = useState(false);
 
   const templates: ContentTemplate[] = [
     {

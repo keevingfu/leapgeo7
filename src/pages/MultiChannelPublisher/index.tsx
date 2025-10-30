@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, ReactNode } from 'react';
 import {
   Box,
   Typography,
@@ -7,18 +7,10 @@ import {
   Card,
   CardContent,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   TextField,
   LinearProgress,
   Chip,
-  Alert,
-  Tab,
-  Tabs,
   IconButton,
-  Tooltip,
   List,
   ListItem,
   ListItemText,
@@ -29,8 +21,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Stack,
-  Badge,
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
@@ -48,13 +38,11 @@ import {
   Code as GitLabIcon,
   YouTube as YouTubeIcon,
   Reddit as RedditIcon,
-  QuestionAnswer as QuoraIcon,
   BookOutlined as MediumIcon,
   Language as WebIcon,
   Refresh as RefreshIcon,
   Settings as SettingsIcon,
   History as HistoryIcon,
-  ContentCopy as CopyIcon,
   Link as LinkIcon,
   CloudUpload as UploadIcon,
   CloudDone as CloudDoneIcon,
@@ -63,7 +51,7 @@ import {
 interface PublishingChannel {
   id: string;
   name: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   color: string;
   enabled: boolean;
   status: 'connected' | 'disconnected' | 'error';
@@ -101,7 +89,6 @@ interface ContentItem {
 }
 
 export default function MultiChannelPublisher() {
-  const [selectedTab, setSelectedTab] = useState(0);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
   const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
   const [publishDialog, setPublishDialog] = useState(false);
@@ -270,7 +257,7 @@ export default function MultiChannelPublisher() {
     },
   ]);
 
-  const [contentItems, setContentItems] = useState<ContentItem[]>([
+  const [contentItems] = useState<ContentItem[]>([
     {
       id: 'content-001',
       title: 'Complete Guide to MCP Integration',

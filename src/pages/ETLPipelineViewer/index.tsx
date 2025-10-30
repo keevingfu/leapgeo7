@@ -8,14 +8,11 @@ import {
   Paper,
   LinearProgress,
   Chip,
-  Button,
-  IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Divider,
-  Alert,
   Tab,
   Tabs,
   Table,
@@ -24,9 +21,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Alert,
   Tooltip,
-  Badge,
-  CircularProgress,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
@@ -37,24 +33,15 @@ import {
   Hub,
   Speed,
   CheckCircle,
-  Error as ErrorIcon,
   Warning,
-  Info,
-  PlayArrow,
-  Pause,
-  Refresh,
   Timeline,
-  Memory,
   Code,
-  Description,
-  AccountTree,
-  Insights,
   ViewStream,
   ViewModule,
   ArrowForward,
-  ArrowDownward,
+  Description,
+  AccountTree,
 } from '@mui/icons-material';
-import { Sankey } from 'recharts';
 
 // Pipeline stage types
 interface PipelineStage {
@@ -147,7 +134,7 @@ export default function ETLPipelineViewer() {
     errorRate: 0.25,
   });
 
-  const [databases, setDatabases] = useState<DatabaseInfo[]>([
+  const [databases] = useState<DatabaseInfo[]>([
     {
       name: 'MongoDB',
       type: 'Document Store',
@@ -177,7 +164,7 @@ export default function ETLPipelineViewer() {
     },
   ]);
 
-  const [processingJobs, setProcessingJobs] = useState<ProcessingJob[]>([
+  const [processingJobs] = useState<ProcessingJob[]>([
     {
       id: 'job-001',
       source: 'Competitor Blog Analysis',
@@ -211,28 +198,28 @@ export default function ETLPipelineViewer() {
   ]);
 
   // Sankey diagram data for data flow visualization
-  const sankeyData = {
-    nodes: [
-      { name: 'Raw Data' },
-      { name: 'Extraction' },
-      { name: 'Text Content' },
-      { name: 'Metadata' },
-      { name: 'Entities' },
-      { name: 'MongoDB' },
-      { name: 'Neo4j' },
-      { name: 'Vector DB' },
-    ],
-    links: [
-      { source: 0, target: 1, value: 1250 },
-      { source: 1, target: 2, value: 800 },
-      { source: 1, target: 3, value: 380 },
-      { source: 2, target: 4, value: 650 },
-      { source: 2, target: 5, value: 800 },
-      { source: 3, target: 5, value: 380 },
-      { source: 4, target: 6, value: 650 },
-      { source: 2, target: 7, value: 800 },
-    ],
-  };
+  // const sankeyData = {
+  //   nodes: [
+  //     { name: 'Raw Data' },
+  //     { name: 'Extraction' },
+  //     { name: 'Text Content' },
+  //     { name: 'Metadata' },
+  //     { name: 'Entities' },
+  //     { name: 'MongoDB' },
+  //     { name: 'Neo4j' },
+  //     { name: 'Vector DB' },
+  //   ],
+  //   links: [
+  //     { source: 0, target: 1, value: 1250 },
+  //     { source: 1, target: 2, value: 800 },
+  //     { source: 1, target: 3, value: 380 },
+  //     { source: 2, target: 4, value: 650 },
+  //     { source: 2, target: 5, value: 800 },
+  //     { source: 3, target: 5, value: 380 },
+  //     { source: 4, target: 6, value: 650 },
+  //     { source: 2, target: 7, value: 800 },
+  //   ],
+  // };
 
   // Simulate real-time updates
   useEffect(() => {

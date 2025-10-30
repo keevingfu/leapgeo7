@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -19,7 +19,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Alert,
   Paper,
   Tab,
   Tabs,
@@ -27,13 +26,9 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  ListItemSecondaryAction,
-  Tooltip,
-  Badge,
   Divider,
   FormControlLabel,
   Switch,
-  SelectChangeEvent,
 } from '@mui/material';
 import {
   PlayArrow,
@@ -46,19 +41,13 @@ import {
   CloudDownload,
   Language,
   Reddit,
-  YouTube,
-  LinkedIn,
   Assessment,
-  Storage,
   Schedule,
   CheckCircle,
   Error as ErrorIcon,
   Warning,
   Info,
-  Settings,
   Code,
-  Description,
-  Image,
 } from '@mui/icons-material';
 
 // Data source types

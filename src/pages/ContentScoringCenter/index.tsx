@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Typography,
@@ -9,39 +9,23 @@ import {
   Button,
   LinearProgress,
   Chip,
-  Alert,
-  Tab,
-  Tabs,
   IconButton,
-  Tooltip,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
   CircularProgress,
-  Rating,
-  Stack,
-  Divider,
-  Badge,
 } from '@mui/material';
 import {
   Assessment as AssessmentIcon,
   Science as ScienceIcon,
   CheckCircle as CheckIcon,
   Warning as WarningIcon,
-  Error as ErrorIcon,
   TrendingUp as TrendingUpIcon,
-  TrendingDown as TrendingDownIcon,
   Language as LanguageIcon,
   Security as SecurityIcon,
-  Speed as SpeedIcon,
-  Visibility as VisibilityIcon,
-  FormatQuote as QuoteIcon,
-  Link as LinkIcon,
-  LocalOffer as TagIcon,
   Psychology as AIIcon,
   Refresh as RefreshIcon,
-  Download as DownloadIcon,
   Upload as UploadIcon,
   FilterList as FilterIcon,
 } from '@mui/icons-material';
@@ -79,7 +63,6 @@ interface PlatformScore {
 }
 
 export default function ContentScoringCenter() {
-  const [selectedTab, setSelectedTab] = useState(0);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(null);
   const [contentItems, setContentItems] = useState<ContentItem[]>([
     {
@@ -140,7 +123,7 @@ export default function ContentScoringCenter() {
     },
   ]);
 
-  const [scoringMetrics, setScoringMetrics] = useState<ScoringMetric[]>([
+  const [scoringMetrics] = useState<ScoringMetric[]>([
     {
       name: 'Citation Quality',
       score: 85,
